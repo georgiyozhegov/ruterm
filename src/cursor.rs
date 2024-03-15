@@ -1,5 +1,5 @@
 use crate::io::write;
-use base::result::{
+use crate::error::{
       Error,
       Result,
 };
@@ -16,9 +16,9 @@ fn response() -> Result<String>
       let mut response = String::new();
       io::stdin()
             .read_line(&mut response)
-            .map_err(|_| Error::Terminal("failed to read terminal response"))?;
+            .map_err(|_| Error("failed to read terminal response"))?;
       if response.len() < MIN_RESPONSE_LEN {
-            Err(Error::Terminal("invalid terminal response"))
+            Err(Error("invalid terminal response"))
       }
       else {
             Ok(response)

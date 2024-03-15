@@ -1,4 +1,4 @@
-use base::result::{
+use crate::error::{
       Error,
       Result,
 };
@@ -42,6 +42,6 @@ pub fn size() -> Result<(u16, u16)>
       };
       match unsafe { ioctl(STDOUT_FILENO, TIOCGWINSZ, &size) } {
             0 => Ok((size.ws_col as u16, size.ws_row as u16)),
-            _ => Err(Error::Terminal("failed to get terminal size")),
+            _ => Err(Error("failed to get terminal size")),
       }
 }

@@ -31,7 +31,7 @@ fn termios_() -> Result<Termios_>
 /// Provides abstraction over termios settings.
 ///
 /// # Usage
-///
+/// 
 /// ```
 /// let mut termios = Termios::new().unwrap();
 /// termios.raw().unwrap(); // Enable raw mode
@@ -39,6 +39,13 @@ fn termios_() -> Result<Termios_>
 /// // ...
 ///
 /// termios.original().unwrap(); // Restore original settings
+/// ```
+/// 
+/// You can use raw! to do the same thing:
+/// ```
+/// raw!({
+///     // ...
+/// });
 /// ```
 ///
 /// # Note
@@ -77,3 +84,14 @@ impl Termios
                   .map_err(|_| Error("failed to restore original termios settings"))
       }
 }
+
+
+macro_rules! raw {
+    ($block:block) {
+        let termios = Termios::new()?;
+        termios.raw()?;
+        $block
+        termios.original()?;
+    }
+}
+

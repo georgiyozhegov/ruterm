@@ -26,6 +26,7 @@ fn termios_() -> Result<Termios_>
 }
 
 
+//#[cfg(not(doctest))] // requires terminal to run properly
 /// Termios settings.
 ///
 /// Provides abstraction over termios settings.
@@ -33,6 +34,8 @@ fn termios_() -> Result<Termios_>
 /// # Usage
 /// 
 /// ```
+/// use terminal::raw::Termios;
+///
 /// let mut termios = Termios::new().unwrap();
 /// termios.raw().unwrap(); // Enable raw mode
 ///
@@ -43,6 +46,8 @@ fn termios_() -> Result<Termios_>
 /// 
 /// You can use raw! to do the same thing:
 /// ```
+/// use terminal::raw::raw;
+///
 /// raw!({
 ///     // ...
 /// });
@@ -86,9 +91,10 @@ impl Termios
 }
 
 
+#[macro_export]
 macro_rules! raw {
-    ($block:block) {
-        let termios = Termios::new()?;
+    ($block:block) => {
+        let termios = termina::raw::Termios::new()?;
         termios.raw()?;
         $block
         termios.original()?;

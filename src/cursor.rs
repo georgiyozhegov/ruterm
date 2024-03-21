@@ -33,7 +33,9 @@ fn response() -> Result<String>
 /// # Usage
 ///
 /// ```
-/// let (x, y) = get().unwrap();
+/// use terminal::cursor;
+///
+/// let (x, y) = cursor::get().unwrap();
 /// ```
 pub fn get() -> Result<(u16, u16)>
 {
@@ -53,7 +55,9 @@ pub fn get() -> Result<(u16, u16)>
 /// # Usage
 ///
 /// ```
-/// set(2, 5);
+/// use terminal::cursor;
+///
+/// cursor::set(2, 5);
 /// ```
 pub fn set(x: u16, y: u16)
 {
@@ -90,8 +94,10 @@ impl ToString for Direction
 /// # Usage
 ///
 /// ```
-/// move_(Direction::Up, 1); // move up once
-/// move_(Direction::Right, 2); // move right twice
+/// use terminal::cursor::{self, Direction};
+///
+/// cursor::move_(Direction::Up, 1); // move up once
+/// cursor::move_(Direction::Right, 2); // move right twice
 /// ```
 pub fn move_(direction: Direction, distance: u16)
 {

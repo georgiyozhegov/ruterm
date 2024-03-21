@@ -8,7 +8,11 @@ use std::io::{
 
 /// Writes to stdout, then flushes it.
 ///
+/// # Usage
+/// 
 /// ```
+/// use terminal::io::write;
+///
 /// write(b"Hello");
 /// ```
 pub fn write(content: &[u8])
@@ -20,8 +24,12 @@ pub fn write(content: &[u8])
 
 
 /// Reads 1 byte from stdin.
+///  
+/// # Usage
 ///
 /// ```
+/// use terminal::io::read;
+///
 /// if let Some(byte) = read() {
 ///       println!("{byte}");
 /// }

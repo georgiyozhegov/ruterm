@@ -26,6 +26,8 @@ struct Size
 /// # Usage
 ///
 /// ```
+/// use terminal::size;
+///
 /// let (width, height) = size().unwrap();
 /// ```
 ///

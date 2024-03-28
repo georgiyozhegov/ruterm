@@ -61,7 +61,7 @@ impl Termios
 
         pub fn raw(&mut self) -> Result<()>
         {
-                self.raw.c_lflag &= !(ECHO | ICANON | IEXTEN | ISIG); // Oh, scary raw mode
+                self.raw.c_lflag &= !(ECHO | ICANON | IEXTEN | ISIG);
                 self.raw.c_iflag &= !(IXON | ICRNL);
                 self.raw.c_oflag &= !OPOST;
                 self.raw.c_cc[VTIME] = 1;
@@ -90,10 +90,10 @@ impl Termios
 /// ```
 #[macro_export]
 macro_rules! in_raw {
-    ($block:block) => {
-        let mut termios = terminal::raw::Termios::new()?;
-        termios.raw()?;
-        $block
-        termios.original()?;
+    ($block: block) => {
+            let mut termios = terminal::raw::Termios::new()?; // no need to import
+            termios.raw()?;
+            $block
+            termios.original()?;
     }
 }

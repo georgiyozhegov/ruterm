@@ -12,7 +12,7 @@ use std::io::{
 ///
 /// # Usage
 ///
-/// ```
+/// ```no_run
 /// use std::io;
 /// use terminal::io::write_to;
 ///
@@ -28,7 +28,7 @@ pub fn write_to(to: &mut dyn Write, content: &[u8]) -> Result<usize>
 ///
 /// # Usage
 ///
-/// ```
+/// ```no_run
 /// use terminal::io::write;
 ///
 /// write(b"Hello").unwrap();
@@ -42,7 +42,7 @@ pub fn write(content: &[u8]) -> Result<usize>
 ///
 /// # Usage
 ///
-/// ```
+/// ```no_run
 /// use std::io;
 /// use terminal::io::read_from;
 ///
@@ -66,7 +66,7 @@ pub fn read_from(from: &mut impl Read) -> Option<u8>
 ///  
 /// # Usage
 ///
-/// ```
+/// ```no_run
 /// use terminal::io::read;
 ///
 /// if let Some(byte) = read() {
@@ -76,4 +76,26 @@ pub fn read_from(from: &mut impl Read) -> Option<u8>
 pub fn read() -> Option<u8>
 {
         read_from(&mut io::stdin())
+}
+
+/// Flushes `to`.
+///
+/// # Usage
+///
+/// ```no_run
+/// use std::io;
+/// use terminal::io::flush_to;
+///
+/// let mut to = io::stdout();
+/// flush_to(&mut to).unwrap();
+/// ```
+pub fn flush_to(to: &mut dyn Write) -> Result<()>
+{
+        to.flush().map_err(|_| Error("failed to flush"))
+}
+
+/// Flushes stdout.
+pub fn flush() -> Result<()>
+{
+        flush_to(&mut io::stdout())
 }

@@ -35,9 +35,7 @@ fn main() -> Result<()>
 {
         let mut delay_coeff;
         let delay = 100.0;
-        let rotations = 2;
-        let radius = 10;
-        let tail = 5;
+        let radius = 12;
         let n_points = 40;
 
         cursor::hide()?;
@@ -47,19 +45,14 @@ fn main() -> Result<()>
 
                 cursor::start()?;
 
-                let last_coordinates = Vec::new();
-                for _ in 0..rotations {
-                                cursor::set(*x, *y)?;
-                                io::write(b"O")?;
-                                io::flush()?;
+                for (x, y) in coordinates {
+                        cursor::set(x, y)?;
+                        io::write(b"O")?;
+                        io::flush()?;
 
-                                delay_coeff = *y as f64 / (h as f64 / 2.0 + radius as f64);
-                                sleep(Duration::from_millis(
-                                        (delay * delay_coeff) as u64,
-                                ));
-                        }
+                        delay_coeff = y as f64 / (h as f64 / 2.0 + radius as f64);
+                        sleep(Duration::from_millis((delay * delay_coeff) as u64));
                 }
-
                 cursor::set(0, h)?;
         });
         cursor::show()?;

@@ -24,3 +24,8 @@ fn main() -> Result<()> {
     Ok(())
 }
 ```
+
+# Examples
+```bash
+cargo run --example loading
+```

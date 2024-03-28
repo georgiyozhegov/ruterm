@@ -49,10 +49,10 @@ pub fn get() -> Result<(u16, u16)>
 ///
 /// # Usage
 ///
-/// ```
+/// ```no_run
 /// use terminal::cursor;
 ///
-/// cursor::set(2, 5);
+/// cursor::set(2, 5).unwrap();
 /// ```
 pub fn set(x: u16, y: u16) -> Result<usize>
 {
@@ -86,14 +86,14 @@ impl ToString for Direction
 ///
 /// # Usage
 ///
-/// ```
+/// ```no_run
 /// use terminal::cursor::{
 ///         self,
 ///         Direction,
 /// };
 ///
-/// cursor::move_(Direction::Up, 1); // move up once
-/// cursor::move_(Direction::Right, 2); // move right twice
+/// cursor::move_(Direction::Up, 1).unwrap(); // move up once
+/// cursor::move_(Direction::Right, 2).unwrap(); // move right twice
 /// ```
 pub fn move_(direction: Direction, distance: u16) -> Result<usize>
 {

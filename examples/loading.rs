@@ -1,44 +1,67 @@
 use std::{
-        thread::sleep as sleep_,
+        f64::consts::PI,
+        thread::sleep,
         time::Duration,
 };
 use terminal::{
         cursor,
         error::Result,
         in_raw,
-        io::write,
+        io,
         size,
 };
 
-fn sleep(delay: u64)
+fn coordinates(
+        center_x: u16,
+        center_y: u16,
+        scale_x: f64,
+        scale_y: f64,
+        radius: u16,
+        n_points: u32,
+) -> Vec<(u16, u16)>
 {
-        sleep_(Duration::from_millis(delay));
-}
-
-fn center() -> Result<(u16, u16)>
-{
-        let (w, h) = size()?;
-        Ok((w / 2, h / 2))
+        let mut coordinates = Vec::new();
+        let (mut t, mut x, mut y);
+        for i in 1..n_points {
+                t = 2.0 * PI * i as f64 / n_points as f64;
+                x = center_x as f64 + (radius as f64 * t.cos()) * scale_x;
+                y = center_y as f64 + (radius as f64 * t.sin()) * scale_y;
+                coordinates.push((x as u16, y as u16));
+        }
+        coordinates
 }
 
 fn main() -> Result<()>
 {
-        let delay = Duration::from_millis(100);
-        let rotations = 10;
-        let radius = 5;
+        let mut delay_coeff;
+        let delay = 100.0;
+        let rotations = 2;
+        let radius = 10;
+        let tail = 5;
+        let n_points = 40;
 
-        cursor::hide();
+        cursor::hide()?;
         in_raw!({
-                let (cx, cy) = center()?;
-                let (mut x, mut y) = (cx - radius, cy - radius);
-                let (mut mx, mut my) = (0, 0);
+                let (w, h) = size()?;
+                let coordinates = coordinates(w / 2, h / 2, 1.4, 0.6, radius, n_points);
 
-                for r in 1..rotations {
-                        update(cx, cy, &mut mx, &mut my, &mut x, &mut y);
-                        sleep(delay);
+                cursor::start()?;
+
+                let last_coordinates = Vec::new();
+                for _ in 0..rotations {
+                                cursor::set(*x, *y)?;
+                                io::write(b"O")?;
+                                io::flush()?;
+
+                                delay_coeff = *y as f64 / (h as f64 / 2.0 + radius as f64);
+                                sleep(Duration::from_millis(
+                                        (delay * delay_coeff) as u64,
+                                ));
+                        }
                 }
-        });
-        cursor::show();
 
+                cursor::set(0, h)?;
+        });
+        cursor::show()?;
         Ok(())
 }

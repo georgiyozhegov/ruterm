@@ -27,5 +27,6 @@ fn main() -> Result<()> {
 
 # Examples
 ```bash
-cargo run --example loading
+cargo run --example car
 ```
+[car example](https://github.com/georgiyozhegov/terminal/assets/159022025/193a4599-0736-4f5e-9373-a441cfd25b56)

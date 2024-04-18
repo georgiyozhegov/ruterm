@@ -4,3 +4,4 @@ pub mod io;
 pub mod raw;
 mod size;
 pub use size::size;
+pub mod render;

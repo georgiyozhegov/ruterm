@@ -1,8 +1,10 @@
-use crate::error::{
-        Error,
-        Result,
+use crate::{
+        error::{
+                Error,
+                Result,
+        },
+        io::write,
 };
-use crate::io::write;
 use std::io;
 
 const MIN_RESPONSE_LEN: usize = 6;

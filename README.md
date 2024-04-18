@@ -29,4 +29,4 @@ fn main() -> Result<()> {
 ```bash
 cargo run --example car
 ```
-[car example](https://github.com/georgiyozhegov/terminal/assets/159022025/193a4599-0736-4f5e-9373-a441cfd25b56)
+[example](https://github.com/georgiyozhegov/terminal/assets/159022025/e4c4beff-a252-425a-a6c8-a976a327c88d)

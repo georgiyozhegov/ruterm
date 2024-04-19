@@ -1,7 +1,8 @@
 profile:
-	cargo flamegraph --release --example car 
-	# firefox has some troubles with opening local files
-	flatpak run org.chromium.Chromium file://$(shell pwd)/flamegraph.svg
+	export CARGO_PROFILE_RELEASE_DEBUG=true
+	cargo flamegraph --example car 
+	export CARGO_PROFILE_RELEASE_DEBUG=false
+	gtk-launch org.mozilla.firefox.desktop flamegraph.svg
 
 clean:
 	rm perf.data* flamegraph.svg

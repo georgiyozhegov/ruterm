@@ -1,4 +1,8 @@
 use std::{
+        io::{
+                self as io_,
+                Stdout,
+        },
         sync::{
                 Arc,
                 Mutex,
@@ -10,21 +14,19 @@ use std::{
         time::Duration,
 };
 use terminal::{
-        cursor::{
-                self,
-                Direction,
-        },
+        cursor,
         error::Result,
         in_raw,
         io,
         render::{
-                self,
                 render,
+                render_to,
         },
         size,
 };
 
 const SPEED: u16 = 1;
+const FPS: u64 = 60;
 
 macro_rules! fps {
         ($fps:expr) => {
@@ -32,11 +34,17 @@ macro_rules! fps {
         };
 }
 
-fn draw(x: u16, y: u16) -> Result<()>
+fn draw(x: u16, y: u16, out: &mut Stdout) -> Result<()>
 {
         cursor::set(x, y)?;
-        render("o==o\n|  |\n|##|\n*==*".to_string())?;
-        io::flush()?;
+        render_to(
+                out,
+                vec!["o==o", "|  |", "|##|", "*==*"]
+                        .iter()
+                        .map(|string| string.to_string())
+                        .collect(),
+        )?;
+        io::flush_to(out)?;
         Ok(())
 }
 
@@ -75,22 +83,32 @@ fn delay(delay: u64)
 enum Mode
 {
         Sync,
-        Parrallel,
+        Parallel,
         Exit,
 }
 
 fn start(w: u16, h: u16) -> Result<Mode>
 {
         cursor::set(w / 2 - 11, h / 2)?;
-        render(
-            "Press 'h' to move left\n      'j' to move up\n      'k' to move down\n      'l' to move right\n      'q' to quit\n      's' to start sync mode\n      'p' to start parallel mode".to_string())?;
+        render(vec![
+                "Press 'h' to move left",
+                "      'j' to move up",
+                "      'k' to move down",
+                "      'l' to move right",
+                "      'q' to quit",
+                "      's' to start sync mode",
+                "      'p' to start parallel mode",
+        ]
+        .iter()
+        .map(|string| string.to_string())
+        .collect())?;
         io::flush()?;
 
         loop {
                 match io::read() {
                         Some(b'q') => return Ok(Mode::Exit),
                         Some(b's') => return Ok(Mode::Sync),
-                        Some(b'p') => return Ok(Mode::Parrallel),
+                        Some(b'p') => return Ok(Mode::Parallel),
                         _ => {}
                 }
         }
@@ -98,9 +116,10 @@ fn start(w: u16, h: u16) -> Result<Mode>
 
 fn game(x: &mut u16, y: &mut u16, w: u16, h: u16, key: &mut Option<u8>) -> Result<()>
 {
+        let mut stdout = io_::stdout();
         loop {
                 cursor::start()?;
-                draw(*x, *y)?;
+                draw(*x, *y, &mut stdout)?;
                 *key = io::read();
                 if *key == Some(b'q') {
                         cursor::set(0, h)?;
@@ -120,8 +139,9 @@ fn game_parallel(x: Arc<Mutex<u16>>, y: Arc<Mutex<u16>>, w: u16, h: u16) -> Resu
         let run_status_clone = Arc::clone(&run_status);
         let update_thread = thread::spawn(move || -> Result<()> {
                 let mut key;
+                let mut stdin = io_::stdin();
                 loop {
-                        key = io::read();
+                        key = io::read_from(&mut stdin);
                         if key == Some(b'q') {
                                 cursor::set(0, h)?;
                                 *run_status.lock().unwrap() = false;
@@ -137,13 +157,18 @@ fn game_parallel(x: Arc<Mutex<u16>>, y: Arc<Mutex<u16>>, w: u16, h: u16) -> Resu
                 }
         });
         let draw_thread = thread::spawn(move || -> Result<()> {
+                let mut stdout = io_::stdout();
                 loop {
                         if !*run_status_clone.lock().unwrap() {
                                 return Ok(());
                         }
                         cursor::start()?;
-                        draw(*x_clone.lock().unwrap(), *y_clone.lock().unwrap())?;
-                        delay(fps!(60));
+                        draw(
+                                *x_clone.lock().unwrap(),
+                                *y_clone.lock().unwrap(),
+                                &mut stdout,
+                        )?;
+                        delay(fps!(FPS));
                 }
         });
 
@@ -165,7 +190,7 @@ fn main() -> Result<()>
 
                 match start(w, h)? {
                         Mode::Sync => game(&mut x, &mut y, w, h, &mut key)?,
-                        Mode::Parrallel => game_parallel(
+                        Mode::Parallel => game_parallel(
                                 Arc::new(Mutex::new(x)),
                                 Arc::new(Mutex::new(y)),
                                 w,

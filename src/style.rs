@@ -1,7 +1,9 @@
 pub const RESET: &str = "\x1b[m";
 
+/// 4-bit color codes.
 pub mod color
 {
+        /// Foreground colors.
         pub mod fore
         {
                 pub const BLACK: &str = "\x1b[30m";
@@ -14,6 +16,7 @@ pub mod color
                 pub const WHITE: &str = "\x1b[37m";
         }
 
+        /// Background colors.
         pub mod back
         {
                 pub const BLACK: &str = "\x1b[40m";

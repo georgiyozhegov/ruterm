@@ -21,16 +21,13 @@ use std::io::{
 ///
 /// let mut to = io::stdout();
 /// render_to(
-///     &mut to,
-///     vec![
-///         "* *",
-///         " * ",
-///         "* *",
-///     ]
-///     .iter()
-///     .map(|string| string.to_string())
-///     .collect() // convert &str into String
-/// ).unwrap();
+///         &mut to,
+///         vec!["* *", " * ", "* *"]
+///                 .iter()
+///                 .map(|string| string.to_string())
+///                 .collect(), // convert &str into String
+/// )
+/// .unwrap();
 /// ```
 pub fn render_to(to: &mut dyn Write, text: Vec<String>) -> Result<()>
 {
@@ -50,15 +47,12 @@ pub fn render_to(to: &mut dyn Write, text: Vec<String>) -> Result<()>
 /// use terminal::render::render;
 ///
 /// render(
-///     vec![
-///         "* *",
-///         " * ",
-///         "* *",
-///     ]
-///     .iter()
-///     .map(|string| string.to_string())
-///     .collect() // convert &str into String
-/// ).unwrap();
+///         vec!["* *", " * ", "* *"]
+///                 .iter()
+///                 .map(|string| string.to_string())
+///                 .collect(), // convert &str into String
+/// )
+/// .unwrap();
 /// ```
 pub fn render(text: Vec<String>) -> Result<()>
 {

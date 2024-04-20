@@ -22,6 +22,7 @@ use terminal::{
                 render,
                 render_to,
         },
+        style::{color::fore, RESET},
         size,
 };
 
@@ -39,7 +40,7 @@ fn draw(x: u16, y: u16, out: &mut Stdout) -> Result<()>
         cursor::set(x, y)?;
         render_to(
                 out,
-                vec!["o==o", "|  |", "|##|", "*==*"]
+                vec![fore::RED, "o==o", "|  |", "|##|", "*==*", RESET]
                         .iter()
                         .map(|string| string.to_string())
                         .collect(),

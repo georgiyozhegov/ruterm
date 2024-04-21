@@ -3,6 +3,11 @@ name = "ruterm"
 version = "0.2.0"
 edition = "2021"
 license = "MIT"
+repository = "https://github.com/georgiyozhegov/terminal"
+
+readme = "README.md"
+description = "Tiny library for working with the terminal"
+keywords = ["terminal", "simple", "tui"]
 
 [dependencies]
 libc = "0.2.153"

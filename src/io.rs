@@ -8,7 +8,7 @@ use std::io::{
         Write,
 };
 
-/// Writes `content` to `to`.
+/// Writes `content` to `output`.
 ///
 /// # Usage
 ///
@@ -16,12 +16,12 @@ use std::io::{
 /// use std::io;
 /// use terminal::io::write_to;
 ///
-/// let mut to = io::stdout();
-/// write_to(&mut to, b"Hello").unwrap();
+/// let mut output = io::stdout();
+/// write_to(&mut output, b"Hello").unwrap();
 /// ```
-pub fn write_to(to: &mut dyn Write, content: &[u8]) -> Result<usize>
+pub fn write_to(output: &mut dyn Write, content: &[u8]) -> Result<usize>
 {
-        to.write(content).map_err(|_| Error("failed to write"))
+        output.write(content).map_err(|_| Error("failed to write"))
 }
 
 /// Writes `content` to stdout.
@@ -46,15 +46,15 @@ pub fn write(content: &[u8]) -> Result<usize>
 /// use std::io;
 /// use terminal::io::read_from;
 ///
-/// let mut from = io::stdin();
-/// if let Some(byte) = read_from(&mut from) {
+/// let mut input = io::stdin();
+/// if let Some(byte) = read_from(&mut input) {
 ///         println!("{byte}");
 /// }
 /// ```
-pub fn read_from(from: &mut impl Read) -> Option<u8>
+pub fn read_from(input: &mut impl Read) -> Option<u8>
 {
         let mut buffer: [u8; 1] = [0];
-        if from.read_exact(&mut buffer).is_ok() {
+        if input.read_exact(&mut buffer).is_ok() {
                 Some(buffer[0])
         }
         else {
@@ -78,7 +78,7 @@ pub fn read() -> Option<u8>
         read_from(&mut io::stdin())
 }
 
-/// Flushes `to`.
+/// Flushes `output`.
 ///
 /// # Usage
 ///
@@ -86,12 +86,12 @@ pub fn read() -> Option<u8>
 /// use std::io;
 /// use terminal::io::flush_to;
 ///
-/// let mut to = io::stdout();
-/// flush_to(&mut to).unwrap();
+/// let mut output = io::stdout();
+/// flush_to(&mut output).unwrap();
 /// ```
-pub fn flush_to(to: &mut dyn Write) -> Result<()>
+pub fn flush_to(output: &mut dyn Write) -> Result<()>
 {
-        to.flush().map_err(|_| Error("failed to flush"))
+        output.flush().map_err(|_| Error("failed to flush"))
 }
 
 /// Flushes stdout.

@@ -19,9 +19,9 @@ use std::io::{
 /// use std::io;
 /// use terminal::render::render_to;
 ///
-/// let mut to = io::stdout();
+/// let mut output = io::stdout();
 /// render_to(
-///         &mut to,
+///         &mut output,
 ///         vec!["* *", " * ", "* *"]
 ///                 .iter()
 ///                 .map(|string| string.to_string())
@@ -29,10 +29,10 @@ use std::io::{
 /// )
 /// .unwrap();
 /// ```
-pub fn render_to(to: &mut dyn Write, text: Vec<String>) -> Result<()>
+pub fn render_to(output: &mut dyn Write, text: Vec<String>) -> Result<()>
 {
         for line in text {
-                write_to(to, line.as_bytes())?;
+                write_to(output, line.as_bytes())?;
                 cursor::move_(Direction::Down, 1)?;
                 cursor::move_(Direction::Left, line.len() as u16)?;
         }

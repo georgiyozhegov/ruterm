@@ -29,3 +29,13 @@ pub mod color
                 pub const WHITE: &str = "\x1b[47m";
         }
 }
+
+/// SGR codes.
+pub mod style
+{
+        pub const BOLD: &str = "\x1b[1m";
+        pub const ITALIC: &str = "\x1b[3m";
+        pub const UNDERLINE: &str = "\x1b[4m";
+        pub const BLINK: &str = "\x1b[5m";
+        pub const STRIKE: &str = "\x1b[9m";
+}

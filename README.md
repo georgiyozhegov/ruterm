@@ -1,11 +1,18 @@
 # Installation
+
+## Crate
+```bash
+cargo add ruterm
+```
+
+## Repo
 ```bash
 cargo add --git https://github.com/georgiyozhegov/terminal.git
 ```
 
 # Usage
 ```rust
-use terminal::{
+use ruterm::{
     error::Result,
     in_raw,
     io::write,

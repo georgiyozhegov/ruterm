@@ -22,8 +22,12 @@ use terminal::{
                 render,
                 render_to,
         },
-        style::{color::fore, RESET},
         size,
+        style::{
+                color::fore,
+                style::BLINK,
+                RESET,
+        },
 };
 
 const SPEED: u16 = 1;
@@ -40,7 +44,7 @@ fn draw(x: u16, y: u16, out: &mut Stdout) -> Result<()>
         cursor::set(x, y)?;
         render_to(
                 out,
-                vec![fore::RED, "o==o", "|  |", "|##|", "*==*", RESET]
+                vec![fore::RED, BLINK, "o==o", "|  |", "|##|", "*==*", RESET]
                         .iter()
                         .map(|string| string.to_string())
                         .collect(),

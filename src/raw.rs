@@ -30,7 +30,7 @@ fn termios_() -> Result<Termios_>
 /// # Usage
 ///
 /// ```no_run
-/// use terminal::raw::Termios;
+/// use ruterm::raw::Termios;
 ///
 /// let mut termios = Termios::new().unwrap();
 /// termios.raw().unwrap(); // Enable raw mode
@@ -82,7 +82,7 @@ impl Termios
 /// # Usage
 ///
 /// ```ignore
-/// use terminal::in_raw;
+/// use ruterm::in_raw;
 ///
 /// in_raw!({
 ///     // ...
@@ -91,7 +91,7 @@ impl Termios
 #[macro_export]
 macro_rules! in_raw {
     ($block: block) => {
-            let mut termios = terminal::raw::Termios::new()?; // no need to import
+            let mut termios = ruterm::raw::Termios::new()?; // no need to import
             termios.raw()?;
             $block
             termios.original()?;

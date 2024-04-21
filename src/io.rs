@@ -14,7 +14,7 @@ use std::io::{
 ///
 /// ```no_run
 /// use std::io;
-/// use terminal::io::write_to;
+/// use ruterm::io::write_to;
 ///
 /// let mut output = io::stdout();
 /// write_to(&mut output, b"Hello").unwrap();
@@ -29,7 +29,7 @@ pub fn write_to(output: &mut dyn Write, content: &[u8]) -> Result<usize>
 /// # Usage
 ///
 /// ```no_run
-/// use terminal::io::write;
+/// use ruterm::io::write;
 ///
 /// write(b"Hello").unwrap();
 /// ```
@@ -44,7 +44,7 @@ pub fn write(content: &[u8]) -> Result<usize>
 ///
 /// ```no_run
 /// use std::io;
-/// use terminal::io::read_from;
+/// use ruterm::io::read_from;
 ///
 /// let mut input = io::stdin();
 /// if let Some(byte) = read_from(&mut input) {
@@ -67,7 +67,7 @@ pub fn read_from(input: &mut impl Read) -> Option<u8>
 /// # Usage
 ///
 /// ```no_run
-/// use terminal::io::read;
+/// use ruterm::io::read;
 ///
 /// if let Some(byte) = read() {
 ///         println!("{byte}");
@@ -84,7 +84,7 @@ pub fn read() -> Option<u8>
 ///
 /// ```no_run
 /// use std::io;
-/// use terminal::io::flush_to;
+/// use ruterm::io::flush_to;
 ///
 /// let mut output = io::stdout();
 /// flush_to(&mut output).unwrap();

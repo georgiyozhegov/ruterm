@@ -23,7 +23,7 @@ struct Size
 /// # Usage
 ///
 /// ```no_run
-/// use terminal::size;
+/// use ruterm::size;
 ///
 /// let (width, height) = size().unwrap();
 /// ```

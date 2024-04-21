@@ -1,4 +1,4 @@
-use terminal::{
+use ruterm::{
         cursor,
         error::Result,
         in_raw,

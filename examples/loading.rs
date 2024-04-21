@@ -3,7 +3,7 @@ use std::{
         thread::sleep,
         time::Duration,
 };
-use terminal::{
+use ruterm::{
         cursor,
         error::Result,
         in_raw,

@@ -31,7 +31,7 @@ fn response() -> Result<String>
 /// # Usage
 ///
 /// ```no_run
-/// use terminal::cursor;
+/// use ruterm::cursor;
 ///
 /// let (x, y) = cursor::get().unwrap();
 /// ```
@@ -52,7 +52,7 @@ pub fn get() -> Result<(u16, u16)>
 /// # Usage
 ///
 /// ```no_run
-/// use terminal::cursor;
+/// use ruterm::cursor;
 ///
 /// cursor::set(2, 5).unwrap();
 /// ```
@@ -89,7 +89,7 @@ impl ToString for Direction
 /// # Usage
 ///
 /// ```no_run
-/// use terminal::cursor::{
+/// use ruterm::cursor::{
 ///         self,
 ///         Direction,
 /// };

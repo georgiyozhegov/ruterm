@@ -11,18 +11,18 @@ use std::io::{
         Write,
 };
 
-/// Writes `text` to `to` in rendered form without need to add cursor manipulation stuff.
+/// Writes `text` to `output` in rendered form.
 ///
 /// # Usage
 ///
 /// ```no_run
 /// use std::io;
-/// use terminal::render::render_to;
+/// use ruterm::render::render_to;
 ///
 /// let mut output = io::stdout();
 /// render_to(
 ///         &mut output,
-///         vec!["* *", " * ", "* *"]
+///         vec!["* *", " * ", "* *"] // each element of the vec represents new line
 ///                 .iter()
 ///                 .map(|string| string.to_string())
 ///                 .collect(), // convert &str into String
@@ -39,15 +39,15 @@ pub fn render_to(output: &mut dyn Write, text: Vec<String>) -> Result<()>
         Ok(())
 }
 
-/// Writes `text` to stdout in rendered form without need to add cursor manipulation stuff.
+/// Writes `text` to stdout in rendered form.
 ///
 /// # Usage
 ///
 /// ```no_run
-/// use terminal::render::render;
+/// use ruterm::render::render;
 ///
 /// render(
-///         vec!["* *", " * ", "* *"]
+///         vec!["* *", " * ", "* *"] // each element of the vec represents new line
 ///                 .iter()
 ///                 .map(|string| string.to_string())
 ///                 .collect(), // convert &str into String

@@ -5,4 +5,5 @@ profile:
 	gtk-launch org.mozilla.firefox.desktop flamegraph.svg
 
 clean:
+	cargo clean
 	rm perf.data* flamegraph.svg

@@ -2,3 +2,4 @@ target/
 framegraph.svg
 perf.data*
 .idea/
+Cargo.lock

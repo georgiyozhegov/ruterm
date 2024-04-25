@@ -1,9 +1,22 @@
 pub const RESET: &str = "\x1b[m";
 
-/// 4-bit color codes.
+/// Color codes.
 pub mod color
 {
         /// Foreground colors.
+        ///
+        /// # Basic usage
+        ///
+        /// ```no_run
+        /// use ruterm::{
+        ///         io::write,
+        ///         style::color::fore::GREEN,
+        ///         style::RESET,
+        /// };
+        ///
+        /// let content = GREEN.to_string() + "This is a green text" + RESET;
+        /// write(content.as_bytes()).unwrap();
+        /// ```
         pub mod fore
         {
                 pub const BLACK: &str = "\x1b[30m";
@@ -14,9 +27,43 @@ pub mod color
                 pub const MAGENTA: &str = "\x1b[35m";
                 pub const CYAN: &str = "\x1b[36m";
                 pub const WHITE: &str = "\x1b[37m";
+
+                /// Foreground RGB color.
+                ///
+                /// # Usage
+                ///
+                /// ```no_run
+                /// use ruterm::{
+                ///         fore_rgb,
+                ///         io::write,
+                ///         style::RESET,
+                /// };
+                ///
+                /// let content = fore_rgb!(255, 0, 0) + "This is a red text" + RESET;
+                /// write(content.as_bytes()).unwrap();
+                /// ```
+                #[macro_export]
+                macro_rules! fore_rgb {
+                        ($r:expr, $g:expr, $b:expr) => {
+                                format!("\x1b[38;2;{};{};{}", $r, $g, $b)
+                        };
+                }
         }
 
         /// Background colors.
+        ///
+        /// # Usage
+        ///
+        /// ```no_run
+        /// use ruterm::{
+        ///         io::write,
+        ///         style::color::back::GREEN,
+        ///         style::RESET,
+        /// };
+        ///
+        /// let content = GREEN.to_string() + "This is a text with green background" + RESET;
+        /// write(content.as_bytes()).unwrap();
+        /// ```
         pub mod back
         {
                 pub const BLACK: &str = "\x1b[40m";
@@ -27,6 +74,27 @@ pub mod color
                 pub const MAGENTA: &str = "\x1b[45m";
                 pub const CYAN: &str = "\x1b[46m";
                 pub const WHITE: &str = "\x1b[47m";
+
+                /// Background RGB color.
+                ///
+                /// # Usage
+                ///
+                /// ```no_run
+                /// use ruterm::{
+                ///         back_rgb,
+                ///         io::write,
+                ///         style::RESET,
+                /// };
+                ///
+                /// let content = back_rgb!(255, 0, 0) + "This is a text with red background" + RESET;
+                /// write(content.as_bytes()).unwrap();
+                /// ```
+                #[macro_export]
+                macro_rules! back_rgb {
+                        ($r:expr, $g:expr, $b:expr) => {
+                                format!("\x1b[48;2;{};{};{}", $r, $g, $b)
+                        };
+                }
         }
 }
 

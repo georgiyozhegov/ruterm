@@ -1,17 +1,3 @@
-# Installation
-
-## Crate
-```bash
-cargo add ruterm
-```
-
-## Repo
-```bash
-git clone https://github.com/georgiyozhegov/terminal.git
-```
-
-# Usage
-```rust
 use ruterm::{
     error::Result,
     in_raw,
@@ -34,10 +20,3 @@ fn main() -> Result<()> {
 
     Ok(())
 }
-```
-
-# Examples
-```bash
-cargo run --example car
-```
-[example](https://github.com/georgiyozhegov/terminal/assets/159022025/e4c4beff-a252-425a-a6c8-a976a327c88d)

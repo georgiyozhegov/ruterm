@@ -2,6 +2,7 @@ use ruterm::{
         cursor,
         error::Result,
         in_raw,
+        fore_rgb,
         io,
         render::{
                 render,
@@ -44,7 +45,7 @@ fn draw(x: u16, y: u16, out: &mut Stdout) -> Result<()>
         cursor::set(x, y)?;
         render_to(
                 out,
-                vec![fore::RED, BLINK, "o==o", "|  |", "|##|", "*==*", RESET]
+                vec![fore_rgb!(255, 0, 0).as_str(), BLINK, "o==o", "|  |", "|##|", "*==*", RESET]
                         .iter()
                         .map(|string| string.to_string())
                         .collect(),

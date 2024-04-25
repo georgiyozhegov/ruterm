@@ -1,18 +1,3 @@
-use std::{
-        io::{
-                self as io_,
-                Stdout,
-        },
-        sync::{
-                Arc,
-                Mutex,
-        },
-        thread::{
-                self,
-                sleep,
-        },
-        time::Duration,
-};
 use ruterm::{
         cursor,
         error::Result,
@@ -28,6 +13,21 @@ use ruterm::{
                 style::BLINK,
                 RESET,
         },
+};
+use std::{
+        io::{
+                self as io_,
+                Stdout,
+        },
+        sync::{
+                Arc,
+                Mutex,
+        },
+        thread::{
+                self,
+                sleep,
+        },
+        time::Duration,
 };
 
 const SPEED: u16 = 1;

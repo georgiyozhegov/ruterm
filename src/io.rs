@@ -13,8 +13,8 @@ use std::io::{
 /// # Usage
 ///
 /// ```no_run
-/// use std::io;
 /// use ruterm::io::write_to;
+/// use std::io;
 ///
 /// let mut output = io::stdout();
 /// write_to(&mut output, b"Hello").unwrap();
@@ -43,8 +43,8 @@ pub fn write(content: &[u8]) -> Result<usize>
 /// # Usage
 ///
 /// ```no_run
-/// use std::io;
 /// use ruterm::io::read_from;
+/// use std::io;
 ///
 /// let mut input = io::stdin();
 /// if let Some(byte) = read_from(&mut input) {
@@ -83,8 +83,8 @@ pub fn read() -> Option<u8>
 /// # Usage
 ///
 /// ```no_run
-/// use std::io;
 /// use ruterm::io::flush_to;
+/// use std::io;
 ///
 /// let mut output = io::stdout();
 /// flush_to(&mut output).unwrap();

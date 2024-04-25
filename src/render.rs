@@ -16,8 +16,8 @@ use std::io::{
 /// # Usage
 ///
 /// ```no_run
-/// use std::io;
 /// use ruterm::render::render_to;
+/// use std::io;
 ///
 /// let mut output = io::stdout();
 /// render_to(

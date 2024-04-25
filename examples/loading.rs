@@ -1,14 +1,14 @@
-use std::{
-        f64::consts::PI,
-        thread::sleep,
-        time::Duration,
-};
 use ruterm::{
         cursor,
         error::Result,
         in_raw,
         io,
         size,
+};
+use std::{
+        f64::consts::PI,
+        thread::sleep,
+        time::Duration,
 };
 
 fn coordinates(

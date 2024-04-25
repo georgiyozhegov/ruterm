@@ -45,7 +45,7 @@ pub mod color
                 #[macro_export]
                 macro_rules! fore_rgb {
                         ($r:expr, $g:expr, $b:expr) => {
-                                format!("\x1b[38;2;{};{};{}", $r, $g, $b)
+                                format!("\x1b[38;2;{};{};{}m", $r, $g, $b)
                         };
                 }
         }
@@ -92,7 +92,7 @@ pub mod color
                 #[macro_export]
                 macro_rules! back_rgb {
                         ($r:expr, $g:expr, $b:expr) => {
-                                format!("\x1b[48;2;{};{};{}", $r, $g, $b)
+                                format!("\x1b[48;2;{};{};{}m", $r, $g, $b)
                         };
                 }
         }

@@ -20,12 +20,43 @@ pub const END: &str = "\n";
 /// ```no_run
 /// use ruterm::render::{
 ///         render_to,
-///         END,
+///         END, // moves to the newline
 /// };
 /// use std::io;
 ///
 /// let mut output = io::stdout();
-/// render_to(&mut output, vec!["* *", END, " * ", END, "* *"]).unwrap();
+/// render_to(&mut output, vec!["* *", END, " * ", END, "* *", END]).unwrap();
+/// ```
+///
+/// You can apply style to the text:
+/// ```no_run
+/// use ruterm::{
+///         render::{
+///                 render_to,
+///                 END,
+///         },
+///         style::{
+///                 color::fore,
+///                 RESET,
+///         },
+/// };
+/// use std::io;
+///
+/// let mut output = io::stdout();
+/// render_to(
+///         &mut output,
+///         vec![
+///                 fore::RED,
+///                 "red",
+///                 END,
+///                 fore::GREEN,
+///                 "green",
+///                 END,
+///                 fore::BLUE,
+///                 "blue",
+///                 RESET, // don't forget to reset style!
+///         ],
+/// ).unwrap();
 /// ```
 pub fn render_to<T>(output: &mut dyn Write, text: Vec<T>) -> Result<()>
 where
@@ -58,10 +89,10 @@ where
 /// ```no_run
 /// use ruterm::render::{
 ///         render,
-///         END,
+///         END, // moves to the newline
 /// };
 ///
-/// render(vec!["* *", END, " * ", END, "* *"]).unwrap();
+/// render(vec!["* *", END, " * ", END, "* *", END]).unwrap();
 /// ```
 pub fn render<T>(text: Vec<T>) -> Result<()>
 where

@@ -2,16 +2,16 @@ use ruterm::{
         cursor,
         error::Result,
         in_raw,
-        fore_rgb,
         io,
         render::{
                 render,
                 render_to,
+                END,
         },
         size,
         style::{
                 color::fore,
-                style::BLINK,
+                style,
                 RESET,
         },
 };
@@ -40,15 +40,24 @@ macro_rules! fps {
         };
 }
 
+#[rustfmt::skip]
 fn draw(x: u16, y: u16, out: &mut Stdout) -> Result<()>
 {
         cursor::set(x, y)?;
         render_to(
                 out,
-                vec![fore_rgb!(255, 0, 0).as_str(), BLINK, "o==o", "|  |", "|##|", "*==*", RESET]
-                        .iter()
-                        .map(|string| string.to_string())
-                        .collect(),
+                vec![
+                        fore::YELLOW, "o", RESET, "==", fore::YELLOW, "o",
+                        RESET,
+                        END,
+                        "|  |",
+                        END,
+                        "|##|",
+                        END,
+                        "*==*",
+                        END,
+                        RESET,
+                ],
         )?;
         io::flush_to(out)?;
         Ok(())
@@ -93,21 +102,21 @@ enum Mode
         Exit,
 }
 
+#[rustfmt::skip]
 fn start(w: u16, h: u16) -> Result<Mode>
 {
         cursor::set(w / 2 - 11, h / 2)?;
         render(vec![
-                "Press 'h' to move left",
-                "      'j' to move up",
-                "      'k' to move down",
-                "      'l' to move right",
-                "      'q' to quit",
-                "      's' to start sync mode",
-                "      'p' to start parallel mode",
-        ]
-        .iter()
-        .map(|string| string.to_string())
-        .collect())?;
+                "Press ",
+                "'h'",
+                " to move left", END,
+                "      'j' to move up", END,
+                "      'k' to move down", END,
+                "      'l' to move right", END,
+                "      'q' to quit", END,
+                "      's' to start sync mode", END,
+                "      'p' to start parallel mode", END,
+        ])?;
         io::flush()?;
 
         loop {

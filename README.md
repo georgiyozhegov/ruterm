@@ -1,3 +1,11 @@
+<div align="center">
+    <h1 align="center">Ruterm</h1>
+    <p align="center">Tiny library for working with the terminal</p>
+
+[![docs.rs](https://img.shields.io/docsrs/ruterm)](https://crates.io/crates/ruterm)
+![GitHub License](https://img.shields.io/github/license/georgiyozhegov/terminal)
+</div>
+
 # Installation
 
 ## Crate

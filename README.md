@@ -8,15 +8,11 @@
 </div>
 
 # Installation
-
-## Crate
 ```bash
-cargo add ruterm
+cargo add ruterm # from crates.io
 ```
-
-## Repo
 ```bash
-git clone https://github.com/georgiyozhegov/terminal.git
+cargo add --git https://github.com/georgiyozhegov/terminal.git # more recent version
 ```
 
 # Usage

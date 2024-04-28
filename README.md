@@ -1,7 +1,7 @@
 <div align="center">
     <img src="https://github.com/georgiyozhegov/terminal/assets/159022025/b9bf9c24-486c-44b1-ac9e-e856426c2acc" width=240px height=240px>
     <h1 align="center">Ruterm</h1>
-    <p align="center">Tiny library for working with the terminal</p>
+    <p align="center">Tiny (~300 loc) library for working with the terminal</p>
     
 [![docs.rs](https://img.shields.io/docsrs/ruterm)](https://crates.io/crates/ruterm)
 ![GitHub License](https://img.shields.io/github/license/georgiyozhegov/terminal)

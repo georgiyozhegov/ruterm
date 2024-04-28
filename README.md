@@ -3,7 +3,7 @@
     <h1 align="center">Ruterm</h1>
     <p align="center">Tiny (~300 loc) library for working with the terminal</p>
     
-[![docs.rs](https://img.shields.io/docsrs/ruterm)](https://crates.io/crates/ruterm)
+[![docs.rs](https://img.shields.io/docsrs/ruterm)](https://docs.rs/ruterm/latest/ruterm/)
 ![GitHub License](https://img.shields.io/github/license/georgiyozhegov/terminal)
 ![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/georgiyozhegov/terminal)
 </div>

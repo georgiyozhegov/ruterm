@@ -24,21 +24,13 @@ pub fn write_to(output: &mut dyn Write, content: &[u8]) -> Result<usize>
         output.write(content).map_err(|_| Error("failed to write"))
 }
 
-/// Writes `content` to stdout.
-///
-/// # Usage
-///
-/// ```no_run
-/// use ruterm::io::write;
-///
-/// write(b"Hello").unwrap();
-/// ```
+/// Writes `content` to stdout. Same as `write_to`.
 pub fn write(content: &[u8]) -> Result<usize>
 {
         write_to(&mut io::stdout(), content)
 }
 
-/// Reads byte from `from`.
+/// Reads one byte from `input`.
 ///
 /// # Usage
 ///
@@ -62,17 +54,7 @@ pub fn read_from(input: &mut impl Read) -> Option<u8>
         }
 }
 
-/// Reads byte from stdin.
-///  
-/// # Usage
-///
-/// ```no_run
-/// use ruterm::io::read;
-///
-/// if let Some(byte) = read() {
-///         println!("{byte}");
-/// }
-/// ```
+/// Reads one byte from stdin. Same as `read_from`.
 pub fn read() -> Option<u8>
 {
         read_from(&mut io::stdin())
@@ -94,7 +76,7 @@ pub fn flush_to(output: &mut dyn Write) -> Result<()>
         output.flush().map_err(|_| Error("failed to flush"))
 }
 
-/// Flushes stdout.
+/// Flushes stdout. Same as `flush_to`.
 pub fn flush() -> Result<()>
 {
         flush_to(&mut io::stdout())

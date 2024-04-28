@@ -82,18 +82,7 @@ where
         Ok(())
 }
 
-/// Writes `text` to stdout in rendered form.
-///
-/// # Usage
-///
-/// ```no_run
-/// use ruterm::render::{
-///         render,
-///         END, // moves to the newline
-/// };
-///
-/// render(vec!["* *", END, " * ", END, "* *", END]).unwrap();
-/// ```
+/// Writes `text` to stdout in rendered form. Same as `render_to`.
 pub fn render<T>(text: Vec<T>) -> Result<()>
 where
         T: ToString,

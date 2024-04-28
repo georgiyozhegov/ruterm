@@ -5,6 +5,7 @@
     
 [![docs.rs](https://img.shields.io/docsrs/ruterm)](https://crates.io/crates/ruterm)
 ![GitHub License](https://img.shields.io/github/license/georgiyozhegov/terminal)
+![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/georgiyozhegov/terminal)
 </div>
 
 # Installation

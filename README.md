@@ -9,11 +9,14 @@
 </div>
 
 # Installation
+From crates.io:
 ```bash
-cargo add ruterm # from crates.io
+cargo add ruterm
 ```
+
+From repository (more recent):
 ```bash
-cargo add --git https://github.com/georgiyozhegov/terminal.git # more recent version
+cargo add --git https://github.com/georgiyozhegov/terminal.git
 ```
 
 # Usage

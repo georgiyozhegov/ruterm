@@ -2,7 +2,10 @@ use crate::error::{
         Error,
         Result,
 };
-use libc::STDIN_FILENO;
+use std::{
+        io,
+        os::fd::AsRawFd,
+};
 use termios::{
         tcsetattr,
         Termios as Termios_,
@@ -20,7 +23,8 @@ use termios::{
 
 fn termios_() -> Result<Termios_>
 {
-        Termios_::from_fd(STDIN_FILENO).map_err(|_| Error("failed to get termios from stdin"))
+        Termios_::from_fd(io::stdin().as_raw_fd())
+                .map_err(|_| Error("failed to get termios from stdin"))
 }
 
 /// Termios settings.
@@ -66,13 +70,13 @@ impl Termios
                 self.raw.c_oflag &= !OPOST;
                 self.raw.c_cc[VTIME] = 1;
                 self.raw.c_cc[VMIN] = 0;
-                tcsetattr(STDIN_FILENO, TCSAFLUSH, &self.raw)
+                tcsetattr(io::stdin().as_raw_fd(), TCSAFLUSH, &self.raw)
                         .map_err(|_| Error("failed to set raw termios settings"))
         }
 
         pub fn original(&mut self) -> Result<()>
         {
-                tcsetattr(STDIN_FILENO, TCSAFLUSH, &self.original)
+                tcsetattr(io::stdin().as_raw_fd(), TCSAFLUSH, &self.original)
                         .map_err(|_| Error("failed to restore original termios settings"))
         }
 }

@@ -12,3 +12,8 @@ keywords = ["terminal", "simple", "tui"]
 [dependencies]
 libc = "0.2.153"
 termios = "0.3.3"
+
+[features]
+default = ["render", "style"]
+render = []
+style = []

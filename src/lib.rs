@@ -2,6 +2,7 @@ pub mod cursor;
 pub mod error;
 pub mod io;
 pub mod raw;
+#[cfg(feature = "size")]
 mod size;
 #[cfg(feature = "size")]
 pub use size::size;

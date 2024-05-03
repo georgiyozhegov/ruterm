@@ -10,7 +10,7 @@ description = "Tiny library for working with the terminal"
 keywords = ["terminal", "simple", "tui"]
 
 [dependencies]
-libc = "0.2.153"
+libc = {version = "0.2.153", optional = true}
 termios = "0.3.3"
 
 [features]

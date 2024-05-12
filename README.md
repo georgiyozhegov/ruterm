@@ -9,6 +9,7 @@
 </div>
 
 # Installation
+
 From crates.io:
 ```bash
 cargo add ruterm
@@ -20,6 +21,7 @@ cargo add --git https://github.com/georgiyozhegov/terminal.git
 ```
 
 # Usage
+
 ```rust
 use ruterm::{
     error::Result,
@@ -46,7 +48,13 @@ fn main() -> Result<()> {
 ```
 
 # Examples
+
 ```bash
 cargo run --example car
 ```
-[example](https://github.com/georgiyozhegov/terminal/assets/159022025/e4c4beff-a252-425a-a6c8-a976a327c88d)
+[Example](https://github.com/georgiyozhegov/terminal/assets/159022025/e4c4beff-a252-425a-a6c8-a976a327c88d)
+
+# References
+
+- [Kilo](https://github.com/antirez/kilo)
+- [Tutorial](https://viewsourcecode.org/snaptoken/kilo/02.enteringRawMode.html)

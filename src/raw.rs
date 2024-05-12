@@ -58,15 +58,15 @@ fn raw(mut termios: Termios_) -> Termios_
 ///
 /// # Flags
 ///
-/// - ECHO      disable echoing
-/// - ICANON    read byte-by-byte
-/// - ISIG      disable ctrl-c and ctrl-z exit
-/// - IXON      disable software flow control
-/// - IEXTEN    disable ctrl-v
-/// - ICRNL     fix ctrl-m
-/// - OPOST     disable output post-processing
-/// - VTIME     read timeout
-/// - VMIN      minimum number of bytes needed for read
+/// - `ECHO`      disable echoing
+/// - `ICANON`    read byte-by-byte
+/// - `ISIG`      disable ctrl-c and ctrl-z exit
+/// - `IXON`      disable software flow control
+/// - `IEXTEN`    disable ctrl-v
+/// - `ICRNL`     fix ctrl-m
+/// - `OPOST`     disable output post-processing
+/// - `VTIME`     read timeout
+/// - `VMIN`      minimum number of bytes needed for read
 ///
 /// # References
 ///

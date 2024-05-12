@@ -10,6 +10,33 @@ use std::io::{
         self,
         Write,
 };
+use std::str::Chars;
+
+pub const ESCAPE_END: [char; 9] = ['m', 'A', 'B', 'C', 'D', 'H', 'J', 'l', 'h'];
+
+fn skip_invisible(line: &mut Chars)
+{
+        while let Some(c) = line.next() {
+                if ESCAPE_END.contains(&c) {
+                        break;
+                }
+        }
+}
+
+fn visible_length(line: &String) -> u16
+{
+        let mut length = 0;
+        let mut line = line.chars();
+        while let Some(c) = line.next() {
+                if c == '\x1b' {
+                        skip_invisible(&mut line);
+                }
+                else {
+                        length += 1;
+                }
+        }
+        length
+}
 
 pub const END: &str = "\n";
 
@@ -56,7 +83,8 @@ pub const END: &str = "\n";
 ///                 "blue",
 ///                 RESET, // don't forget to reset style!
 ///         ],
-/// ).unwrap();
+/// )
+/// .unwrap();
 /// ```
 pub fn render_to<T>(output: &mut dyn Write, text: Vec<T>) -> Result<()>
 where
@@ -73,9 +101,7 @@ where
                         }
                         _ => {
                                 write_to(output, line.as_bytes())?;
-                                if !line.starts_with("\x1b") {
-                                        shift += line.len() as u16;
-                                }
+                                shift += visible_length(&line);
                         }
                 }
         }
@@ -88,4 +114,17 @@ where
         T: ToString,
 {
         render_to(&mut io::stdout(), text)
+}
+
+#[cfg(test)]
+mod tests
+{
+        use super::*;
+
+        #[test]
+        fn visible_length_()
+        {
+                let code = "\x1b[?25hHello".to_string();
+                assert_eq!("Hello".len() as u16, visible_length(&code));
+        }
 }

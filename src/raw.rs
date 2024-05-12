@@ -22,10 +22,9 @@ use termios::{
         VTIME,
 };
 
-fn termios_() -> Result<Termios_>
+fn termios<D: AsRawFd>(fd: &D) -> Result<Termios_>
 {
-        Termios_::from_fd(io::stdin().as_raw_fd())
-                .map_err(|_| Error("invalid file descriptor"))
+        Termios_::from_fd(fd.as_raw_fd()).map_err(|_| Error("invalid file descriptor"))
 }
 
 fn raw(mut termios: Termios_) -> Termios_
@@ -47,8 +46,10 @@ fn raw(mut termios: Termios_) -> Termios_
 ///
 /// ```no_run
 /// use ruterm::raw::Termios;
+/// use std::io;
 ///
-/// let mut termios = Termios::new().unwrap();
+/// let fd = io::stdin();
+/// let mut termios = Termios::new(fd).unwrap();
 /// termios.raw().unwrap(); // Enable raw mode
 ///
 /// // ...
@@ -76,31 +77,33 @@ fn raw(mut termios: Termios_) -> Termios_
 /// # Note
 ///
 /// Contains unsafe bindings!
-pub struct Termios
+pub struct Termios<D: AsRawFd>
 {
+        fd: D,
         original: Termios_,
         raw: Termios_,
 }
 
-impl Termios
+impl<D: AsRawFd> Termios<D>
 {
-        pub fn new() -> Result<Self>
+        pub fn new(fd: D) -> Result<Self>
         {
                 Ok(Self {
-                        original: termios_()?,
-                        raw: raw(termios_()?),
+                        original: termios(&fd)?,
+                        raw: raw(termios(&fd)?),
+                        fd, // trick: fd should be the last parameter
                 })
         }
 
         pub fn raw(&self) -> Result<()>
         {
-                tcsetattr(io::stdin().as_raw_fd(), TCSAFLUSH, &self.raw)
+                tcsetattr(self.fd.as_raw_fd(), TCSAFLUSH, &self.raw)
                         .map_err(|_| Error("failed to set raw flags"))
         }
 
         pub fn original(&self) -> Result<()>
         {
-                tcsetattr(io::stdin().as_raw_fd(), TCSAFLUSH, &self.original)
+                tcsetattr(self.fd.as_raw_fd(), TCSAFLUSH, &self.original)
                         .map_err(|_| Error("failed to restore original flags"))
         }
 }
@@ -119,7 +122,8 @@ impl Termios
 #[macro_export]
 macro_rules! in_raw {
     ($block: block) => {
-            let mut termios = ruterm::raw::Termios::new()?; // no need to import
+            let fd = std::io::stdin();
+            let mut termios = ruterm::raw::Termios::new(fd)?;
             termios.raw()?;
             $block
             termios.original()?;

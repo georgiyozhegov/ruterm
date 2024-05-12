@@ -124,7 +124,20 @@ mod tests
         #[test]
         fn visible_length_()
         {
-                let code = "\x1b[?25hHello".to_string();
-                assert_eq!("Hello".len() as u16, visible_length(&code));
+                let code = concat!("Hi", "\x1b[?25h", "Hello").to_string();
+                assert_eq!(("Hi".len() + "Hello".len()) as u16, visible_length(&code));
+        }
+
+        #[test]
+        fn render_()
+        {
+                let text = vec!["1line", "1line", END, "2line"];
+                let mut buffer = Vec::new();
+                render_to(&mut buffer, text).unwrap();
+                // TODO: make cursor control functions with output parameter
+                assert_eq!(
+                        "1line1line2line".to_string(),
+                        buffer.iter().map(|b| *b as char).collect::<String>()
+                );
         }
 }

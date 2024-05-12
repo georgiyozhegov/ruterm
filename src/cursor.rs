@@ -141,7 +141,7 @@ pub fn move_to(output: &mut dyn Write, direction: Direction, distance: u16) -> R
         )
 }
 
-/// Moves cursor in the terminal window. Writes to stdout. Same as `move_`.
+/// Moves cursor in the terminal window. Writes to stdout. Same as `move_to`.
 pub fn move_(direction: Direction, distance: u16) -> Result<usize>
 {
         move_to(&mut io::stdout(), direction, distance)

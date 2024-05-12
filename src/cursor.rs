@@ -45,7 +45,7 @@ fn position(response: String) -> Result<(u16, u16)>
         }
 }
 
-/// Gets cursor position. Uses `input`.
+/// Gets cursor position. Reads from `input`.
 ///
 /// Start position is top left corner of terminal window.
 ///
@@ -64,7 +64,7 @@ pub fn get_from(input: &mut dyn BufRead) -> Result<(u16, u16)>
         position(response)
 }
 
-/// Gets cursor position. Uses stdin. Same as `get_from`.
+/// Gets cursor position. Reads from stdin. Same as `get_from`.
 pub fn get() -> Result<(u16, u16)>
 {
         let response = response(&mut io::stdin().lock())?;

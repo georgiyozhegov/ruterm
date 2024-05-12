@@ -28,6 +28,17 @@ fn termios_() -> Result<Termios_>
                 .map_err(|_| Error("failed to get termios from stdin"))
 }
 
+fn raw(mut termios: Termios_) -> Termios_
+{
+        termios.c_lflag &= !(ECHO | ICANON | IEXTEN | ISIG);
+        termios.c_iflag &= !(IXON | ICRNL);
+        termios.c_oflag &= !OPOST;
+        termios.c_cflag |= CS8;
+        termios.c_cc[VTIME] = 1;
+        termios.c_cc[VMIN] = 0;
+        termios
+}
+
 /// Termios settings.
 ///
 /// Provides abstraction over termios settings.
@@ -45,6 +56,23 @@ fn termios_() -> Result<Termios_>
 /// termios.original().unwrap(); // Restore original settings
 /// ```
 ///
+/// # Flags
+///
+/// - ECHO      disable echoing
+/// - ICANON    read byte-by-byte
+/// - ISIG      disable ctrl-c and ctrl-z exit
+/// - IXON      disable software flow control
+/// - IEXTEN    disable ctrl-v
+/// - ICRNL     fix ctrl-m
+/// - OPOST     disable output post-processing
+/// - VTIME     read timeout
+/// - VMIN      minimum number of bytes needed for read
+///
+/// # References
+///
+/// - [Kilo](https://github.com/antirez/kilo)
+/// - [Tutorial](https://viewsourcecode.org/snaptoken/kilo/02.enteringRawMode.html)
+///
 /// # Note
 ///
 /// Contains unsafe bindings!
@@ -60,36 +88,12 @@ impl Termios
         {
                 Ok(Self {
                         original: termios_()?,
-                        raw: termios_()?,
+                        raw: raw(termios_()?),
                 })
         }
 
-        /// Enables raw mode.
-        ///
-        /// # Flags
-        ///
-        /// - ECHO      disable echoing
-        /// - ICANON    read byte-by-byte
-        /// - ISIG      disable ctrl-c and ctrl-z exit
-        /// - IXON      disable software flow control
-        /// - IEXTEN    disable ctrl-v
-        /// - ICRNL     fix ctrl-m
-        /// - OPOST     disable output post-processing
-        /// - VTIME     read timeout
-        /// - VMIN      minimum number of bytes needed for read
-        ///
-        /// # References
-        ///
-        /// - [Kilo](https://github.com/antirez/kilo)
-        /// - [Tutorial](https://viewsourcecode.org/snaptoken/kilo/02.enteringRawMode.html)
         pub fn raw(&mut self) -> Result<()>
         {
-                self.raw.c_lflag &= !(ECHO | ICANON | IEXTEN | ISIG);
-                self.raw.c_iflag &= !(IXON | ICRNL);
-                self.raw.c_oflag &= !OPOST;
-                self.raw.c_cflag |= CS8;
-                self.raw.c_cc[VTIME] = 1;
-                self.raw.c_cc[VMIN] = 0;
                 tcsetattr(io::stdin().as_raw_fd(), TCSAFLUSH, &self.raw)
                         .map_err(|_| Error("failed to set raw termios settings"))
         }

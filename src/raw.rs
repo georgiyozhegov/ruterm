@@ -66,7 +66,7 @@ impl Termios
 
         /// Enables raw mode.
         ///
-        /// Sets values:
+        /// # Flags
         ///     - ECHO      disable echoing
         ///     - ICANON    read byte-by-byte
         ///     - ISIG      disable ctrl-c and ctrl-z exit
@@ -74,6 +74,12 @@ impl Termios
         ///     - IEXTEN    disable ctrl-v
         ///     - ICRNL     fix ctrl-m
         ///     - OPOST     disable output post-processing
+        ///     - VTIME     read timeout
+        ///     - VMIN      minimum number of bytes needed for read
+        ///
+        /// # References
+        ///     - [Kilo](https://github.com/antirez/kilo)
+        ///     - [Tutorial](https://viewsourcecode.org/snaptoken/kilo/02.enteringRawMode.html)
         pub fn raw(&mut self) -> Result<()>
         {
                 self.raw.c_lflag &= !(ECHO | ICANON | IEXTEN | ISIG);

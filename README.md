@@ -56,5 +56,6 @@ cargo run --example car
 
 # References
 
-- [Kilo](https://github.com/antirez/kilo)
-- [Tutorial](https://viewsourcecode.org/snaptoken/kilo/02.enteringRawMode.html)
+- [Kilo Editor](https://github.com/antirez/kilo)
+- [Raw Mode Tutorial](https://viewsourcecode.org/snaptoken/kilo/02.enteringRawMode.html)
+- [ANSI Escape Codes](https://en.wikipedia.org/wiki/ANSI_escape_code)

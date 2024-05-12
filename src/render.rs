@@ -12,7 +12,7 @@ use std::io::{
 };
 use std::str::Chars;
 
-pub const ESCAPE_END: [char; 9] = ['m', 'A', 'B', 'C', 'D', 'H', 'J', 'l', 'h'];
+const ESCAPE_END: [char; 9] = ['m', 'A', 'B', 'C', 'D', 'H', 'J', 'l', 'h'];
 
 fn skip_invisible(line: &mut Chars)
 {

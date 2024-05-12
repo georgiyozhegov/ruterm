@@ -2,10 +2,7 @@ use crate::error::{
         Error,
         Result,
 };
-use std::{
-        io,
-        os::fd::AsRawFd,
-};
+use std::os::fd::AsRawFd;
 use termios::{
         tcsetattr,
         Termios as Termios_,

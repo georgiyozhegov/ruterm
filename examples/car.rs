@@ -132,10 +132,11 @@ fn start(w: u16, h: u16) -> Result<Mode>
 fn game(x: &mut u16, y: &mut u16, w: u16, h: u16, key: &mut Option<u8>) -> Result<()>
 {
         let mut stdout = io_::stdout();
+        let mut stdin = io_::stdin();
         loop {
                 cursor::start()?;
                 draw(*x, *y, &mut stdout)?;
-                *key = io::read();
+                *key = io::read_from(&mut stdin);
                 if *key == Some(b'q') {
                         cursor::set(0, h)?;
                         break;

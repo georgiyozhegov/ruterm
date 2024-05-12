@@ -25,7 +25,7 @@ use termios::{
 fn termios_() -> Result<Termios_>
 {
         Termios_::from_fd(io::stdin().as_raw_fd())
-                .map_err(|_| Error("failed to get termios from stdin"))
+                .map_err(|_| Error("invalid file descriptor"))
 }
 
 fn raw(mut termios: Termios_) -> Termios_
@@ -92,16 +92,16 @@ impl Termios
                 })
         }
 
-        pub fn raw(&mut self) -> Result<()>
+        pub fn raw(&self) -> Result<()>
         {
                 tcsetattr(io::stdin().as_raw_fd(), TCSAFLUSH, &self.raw)
-                        .map_err(|_| Error("failed to set raw termios settings"))
+                        .map_err(|_| Error("failed to set raw flags"))
         }
 
-        pub fn original(&mut self) -> Result<()>
+        pub fn original(&self) -> Result<()>
         {
                 tcsetattr(io::stdin().as_raw_fd(), TCSAFLUSH, &self.original)
-                        .map_err(|_| Error("failed to restore original termios settings"))
+                        .map_err(|_| Error("failed to restore original flags"))
         }
 }
 

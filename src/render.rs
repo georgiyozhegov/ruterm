@@ -95,8 +95,8 @@ where
                 let line = line.to_string();
                 match line.as_str() {
                         END => {
-                                cursor::move_(Direction::Down, 1)?;
-                                cursor::move_(Direction::Left, shift)?;
+                                cursor::move_to(output, Direction::Down, 1)?;
+                                cursor::move_to(output, Direction::Left, shift)?;
                                 shift = 0;
                         }
                         _ => {
@@ -134,9 +134,8 @@ mod tests
                 let text = vec!["1line", "1line", END, "2line"];
                 let mut buffer = Vec::new();
                 render_to(&mut buffer, text).unwrap();
-                // TODO: make cursor control functions with output parameter
                 assert_eq!(
-                        "1line1line2line".to_string(),
+                        concat!("1line", "1line", "\x1b[1B", "\x1b[10D", "2line").to_string(),
                         buffer.iter().map(|b| *b as char).collect::<String>()
                 );
         }

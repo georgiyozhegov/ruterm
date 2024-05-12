@@ -20,6 +20,8 @@ From repository (more recent):
 cargo add --git https://github.com/georgiyozhegov/terminal.git
 ```
 
+**Warning**: Currently, supports only Linux.
+
 # Usage
 
 ```rust

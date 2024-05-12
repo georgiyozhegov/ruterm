@@ -177,7 +177,7 @@ pub fn show_to(output: &mut dyn Write) -> Result<usize>
         write_to(output, b"\x1b[?25h")
 }
 
-/// Shows cursor. Writes to stdout. Smae as `show_to`.
+/// Shows cursor. Writes to stdout. Same as `show_to`.
 pub fn show() -> Result<usize>
 {
         show_to(&mut io::stdout())

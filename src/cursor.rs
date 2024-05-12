@@ -19,7 +19,7 @@ const RESPONSE_NUMBER_OF_PARAMETERS: usize = 2;
 
 fn response(input: &mut dyn BufRead) -> Result<String>
 {
-        write(b"\x1b[6n")?; // get cursor position
+        write(b"\x1b[6n")?;
         let mut response = String::new();
         input.read_line(&mut response)
                 .map_err(|_| Error("failed to read terminal response"))?;

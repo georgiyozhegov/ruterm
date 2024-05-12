@@ -2,8 +2,6 @@ pub const RESET: &str = "\x1b[m";
 
 /// Color codes.
 ///
-/// ANSI 4-bit color codes.
-///
 /// # References
 ///
 /// - [Wikipedia](https://en.wikipedia.org/wiki/ANSI_escape_code#Colors)
@@ -11,7 +9,7 @@ pub mod color
 {
         /// Foreground colors.
         ///
-        /// # Basic usage
+        /// # Usage
         ///
         /// ```no_run
         /// use ruterm::{

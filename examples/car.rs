@@ -9,7 +9,7 @@ use ruterm::{
                 END,
         },
         size,
-        style::{
+        view::{
                 color::fore,
                 style,
                 RESET,

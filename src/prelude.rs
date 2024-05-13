@@ -7,7 +7,7 @@ pub use crate::{
                 write,
         },
         size,
-        style::{
+        view::{
                 color,
                 style,
                 RESET,

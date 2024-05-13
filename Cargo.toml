@@ -14,7 +14,7 @@ libc = {version = "0.2.153", optional = true}
 termios = "0.3.3"
 
 [features]
-default = ["render", "style", "size"]
+default = ["render", "view", "size"]
 render = []
-style = []
+view = []
 size = ["dep:libc"]

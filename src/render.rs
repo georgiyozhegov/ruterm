@@ -63,7 +63,7 @@ pub const END: &str = "__render_END__";
 ///                 render_to,
 ///                 END,
 ///         },
-///         style::{
+///         view::{
 ///                 color::fore,
 ///                 RESET,
 ///         },

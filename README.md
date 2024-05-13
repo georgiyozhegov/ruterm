@@ -28,7 +28,7 @@ cargo add --git https://github.com/georgiyozhegov/terminal.git
 use ruterm::{
     error::Result,
     in_raw,
-    style::{color::fore, RESET},
+    view::{color::fore, RESET},
     io::write,
     size,
     cursor,

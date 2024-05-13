@@ -9,5 +9,5 @@ mod size;
 pub use size::size;
 #[cfg(feature = "render")]
 pub mod render;
-#[cfg(feature = "style")]
+#[cfg(feature = "view")]
 pub mod view;

@@ -56,6 +56,17 @@ cargo run --example car
 ```
 [Example](https://github.com/georgiyozhegov/terminal/assets/159022025/e4c4beff-a252-425a-a6c8-a976a327c88d)
 
+# Emulators
+
+Some emulators do not support certain features.
+
+|Name           |Colored text |Size detection    |
+|---------------|-------------|------------------|
+|GNOME Terminal |yes          |yes               |
+|Kitty          |no           |yes               |
+|Alacritty      |yes          |yes               |
+|Warp           |no           |yes (incorrectly) |
+
 # References
 
 - [Kilo Editor](https://github.com/antirez/kilo)

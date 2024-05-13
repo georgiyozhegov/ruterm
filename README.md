@@ -65,7 +65,7 @@ Some emulators do not support certain features.
 |GNOME Terminal |yes          |yes               |
 |Kitty          |no           |yes               |
 |Alacritty      |yes          |yes               |
-|Warp           |no           |yes (incorrectly) |
+|Warp           |yes          |yes (incorrectly) |
 
 # References
 

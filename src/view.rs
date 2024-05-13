@@ -14,8 +14,8 @@ pub mod color
         /// ```no_run
         /// use ruterm::{
         ///         io::write,
-        ///         style::color::fore::GREEN,
-        ///         style::RESET,
+        ///         view::color::fore::GREEN,
+        ///         view::RESET,
         /// };
         ///
         /// let content = GREEN.to_string() + "This is a green text" + RESET;
@@ -40,7 +40,7 @@ pub mod color
                 /// use ruterm::{
                 ///         fore_rgb,
                 ///         io::write,
-                ///         style::RESET,
+                ///         view::RESET,
                 /// };
                 ///
                 /// let content = fore_rgb!(255, 0, 0) + "This is a red text" + RESET;
@@ -61,8 +61,7 @@ pub mod color
         /// ```no_run
         /// use ruterm::{
         ///         io::write,
-        ///         style::color::back::GREEN,
-        ///         style::RESET,
+        ///         view::{color::back::GREEN, RESET},
         /// };
         ///
         /// let content = GREEN.to_string() + "This is a text with green background" + RESET;
@@ -87,7 +86,7 @@ pub mod color
                 /// use ruterm::{
                 ///         back_rgb,
                 ///         io::write,
-                ///         style::RESET,
+                ///         view::RESET,
                 /// };
                 ///
                 /// let content = back_rgb!(255, 0, 0) + "This is a text with red background" + RESET;

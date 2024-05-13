@@ -38,7 +38,8 @@ fn visible_length(line: &String) -> u16
         length
 }
 
-pub const END: &str = "\n";
+/// Moves cursor to the beginning of the next line.
+pub const END: &str = "__render_END__";
 
 /// Writes `text` to `output` in rendered form.
 ///
@@ -98,7 +99,7 @@ where
                                 cursor::move_to(output, Direction::Down, 1)?;
                                 cursor::move_to(output, Direction::Left, shift)?;
                                 shift = 0;
-                        }
+                        },
                         _ => {
                                 write_to(output, line.as_bytes())?;
                                 shift += visible_length(&line);

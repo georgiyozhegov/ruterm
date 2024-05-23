@@ -34,7 +34,7 @@ fn coordinates(
 fn main() -> Result<()>
 {
         let mut delay_coeff;
-        let delay = 100.0;
+        let delay = 90.0;
         let radius = 12;
         let n_points = 40;
 
@@ -44,6 +44,9 @@ fn main() -> Result<()>
                 let coordinates = coordinates(w / 2, h / 2, 1.4, 0.6, radius, n_points);
 
                 cursor::start()?;
+                
+                cursor::set(w / 2 - 5, h / 2)?;
+                io::write(b"Loading...")?;
 
                 for (x, y) in coordinates {
                         cursor::set(x, y)?;
@@ -53,6 +56,10 @@ fn main() -> Result<()>
                         delay_coeff = y as f64 / (h as f64 / 2.0 + radius as f64);
                         sleep(Duration::from_millis((delay * delay_coeff) as u64));
                 }
+
+                cursor::set(w / 2 - 5, h / 2)?;
+                io::write(b"Completed.")?;
+
                 cursor::set(0, h)?;
         });
         cursor::show()?;

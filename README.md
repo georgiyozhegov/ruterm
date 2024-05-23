@@ -17,7 +17,7 @@ cargo add ruterm
 
 From repository (more recent):
 ```bash
-cargo add --git https://github.com/georgiyozhegov/terminal.git
+cargo add --git https://github.com/georgiyozhegov/ruterm.git
 ```
 
 **Warning**: Currently, supports only Linux.

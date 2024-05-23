@@ -51,10 +51,7 @@ fn main() -> Result<()> {
 
 # Examples
 
-```bash
-cargo run --example car
-```
-[Example](https://github.com/georgiyozhegov/terminal/assets/159022025/e4c4beff-a252-425a-a6c8-a976a327c88d)
+[Loading Example](https://github.com/georgiyozhegov/ruterm/assets/159022025/2e86289e-f7a8-420a-921e-623f44a07f09)
 
 # Emulators
 

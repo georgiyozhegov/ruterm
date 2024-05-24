@@ -9,6 +9,12 @@
 ![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/georgiyozhegov/terminal)
 </div>
 
+# Examples
+
+<img style="height: 350px; width: auto;" src="https://github.com/georgiyozhegov/ruterm/assets/159022025/0575c990-7527-41ca-9068-eb88f4f27825">
+<img style="height: 350px; weight: auto;"src="https://github.com/georgiyozhegov/ruterm/assets/159022025/93541f66-fb79-41ee-b564-8aaac6316564">
+
+
 # Usage
 
 ```rust
@@ -35,10 +41,6 @@ fn main() -> Result<()> {
     Ok(())
 }
 ```
-
-# Examples
-
-![Loading Example](https://github.com/georgiyozhegov/ruterm/assets/159022025/0575c990-7527-41ca-9068-eb88f4f27825)
 
 # Installation
 

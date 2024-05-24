@@ -105,6 +105,14 @@ impl<D: AsRawFd> Termios<D>
         }
 }
 
+impl<D: AsRawFd> Drop for Termios<D>
+{
+        fn drop(&mut self)
+        {
+                self.original().unwrap();
+        }
+}
+
 /// Enables raw mode in one line.
 ///
 /// # Usage

@@ -131,6 +131,5 @@ macro_rules! in_raw {
             let mut termios = ruterm::raw::Termios::new(fd)?;
             termios.raw()?;
             $block
-            termios.original()?;
     }
 }

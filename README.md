@@ -53,18 +53,6 @@ fn main() -> Result<()> {
 
 ![Loading Example](https://github.com/georgiyozhegov/ruterm/assets/159022025/0575c990-7527-41ca-9068-eb88f4f27825)
 
-# Emulators
-
-
-Some emulators do not support certain features.
-
-|Name           |Colored text |Size detection    |
-|---------------|-------------|------------------|
-|GNOME Terminal |yes          |yes               |
-|Kitty          |no           |yes               |
-|Alacritty      |yes          |yes               |
-|Warp           |yes          |yes (incorrectly) |
-
 # References
 
 - [Kilo Editor](https://github.com/antirez/kilo)

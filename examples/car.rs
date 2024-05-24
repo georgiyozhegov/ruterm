@@ -96,8 +96,7 @@ fn delay(delay: u64)
 
 enum Mode
 {
-        Sync,
-        Parallel,
+        Play,
         Exit,
 }
 
@@ -113,16 +112,14 @@ fn start(w: u16, h: u16) -> Result<Mode>
                 "      'k' to move down", END,
                 "      'l' to move right", END,
                 "      'q' to quit", END,
-                "      's' to start sync mode", END,
-                "      'p' to start parallel mode", END,
+                "      'p' to play", END,
         ])?;
         io::flush()?;
 
         loop {
                 match io::read() {
                         Some(b'q') => return Ok(Mode::Exit),
-                        Some(b's') => return Ok(Mode::Sync),
-                        Some(b'p') => return Ok(Mode::Parallel),
+                        Some(b'p') => return Ok(Mode::Play),
                         _ => {}
                 }
         }
@@ -146,53 +143,6 @@ fn game(x: &mut u16, y: &mut u16, w: u16, h: u16, key: &mut Option<u8>) -> Resul
         Ok(())
 }
 
-fn game_parallel(x: Arc<Mutex<u16>>, y: Arc<Mutex<u16>>, w: u16, h: u16) -> Result<()>
-{
-        let x_clone = Arc::clone(&x);
-        let y_clone = Arc::clone(&y);
-        let run_status = Arc::new(Mutex::new(true));
-        let run_status_clone = Arc::clone(&run_status);
-        let update_thread = thread::spawn(move || -> Result<()> {
-                let mut key;
-                let mut stdin = io_::stdin();
-                loop {
-                        key = io::read_with_input(&mut stdin);
-                        if key == Some(b'q') {
-                                cursor::set(0, h)?;
-                                *run_status.lock().unwrap() = false;
-                                return Ok(());
-                        }
-                        update(
-                                &mut x.lock().unwrap(),
-                                &mut y.lock().unwrap(),
-                                w as i16,
-                                h as i16,
-                                key,
-                        );
-                }
-        });
-        let draw_thread = thread::spawn(move || -> Result<()> {
-                let mut stdout = io_::stdout();
-                loop {
-                        if !*run_status_clone.lock().unwrap() {
-                                return Ok(());
-                        }
-                        cursor::start()?;
-                        draw(
-                                *x_clone.lock().unwrap(),
-                                *y_clone.lock().unwrap(),
-                                &mut stdout,
-                        )?;
-                        delay(fps!(FPS));
-                }
-        });
-
-        draw_thread.join().unwrap()?;
-        update_thread.join().unwrap()?;
-
-        Ok(())
-}
-
 fn main() -> Result<()>
 {
         let mut key = None;
@@ -204,13 +154,7 @@ fn main() -> Result<()>
                 cursor::start()?;
 
                 match start(w, h)? {
-                        Mode::Sync => game(&mut x, &mut y, w, h, &mut key)?,
-                        Mode::Parallel => game_parallel(
-                                Arc::new(Mutex::new(x)),
-                                Arc::new(Mutex::new(y)),
-                                w,
-                                h,
-                        )?,
+                        Mode::Play => game(&mut x, &mut y, w, h, &mut key)?,
                         Mode::Exit => {}
                 }
 

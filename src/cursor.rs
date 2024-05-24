@@ -1,72 +1,11 @@
 use crate::{
-        error::{
-                Error,
-                Result,
-        },
-        io::{
-                write,
-                write_with_output,
-        },
+        error::Result,
+        io::write_with_output,
 };
 use std::io::{
         self,
-        BufRead,
         Write,
 };
-
-const MIN_RESPONSE_LENGTH: usize = 6;
-const POSITION_LENGTH: usize = 2;
-
-fn response(input: &mut dyn BufRead) -> Result<String>
-{
-        write("\x1b[6n")?;
-        let mut response = String::new();
-        input.read_line(&mut response)
-                .map_err(|_| Error("failed to read terminal response"))?;
-        if response.len() < MIN_RESPONSE_LENGTH {
-                Err(Error("invalid length of terminal response"))
-        }
-        else {
-                Ok(response)
-        }
-}
-
-fn position(response: String) -> Result<(u16, u16)>
-{
-        let response = response[3..response.len() - 1]
-                .split(';')
-                .map(|s| s.parse::<u16>().unwrap())
-                .collect::<Vec<_>>();
-        if response.len() != POSITION_LENGTH {
-                Err(Error("invalid number of terminal response parameters"))
-        }
-        else {
-                Ok((response[0], response[1]))
-        }
-}
-
-/// Gets cursor position. Reads from `input`. Same as [`get()`].
-pub fn get_with_input(input: &mut dyn BufRead) -> Result<(u16, u16)>
-{
-        let response = response(input)?;
-        position(response)
-}
-
-/// Gets cursor position. Reads from stdin.
-///
-/// Start position is top left corner of terminal window.
-///
-/// # Usage
-///
-/// ```no_run
-/// use ruterm::cursor;
-///
-/// let (x, y) = cursor::get().unwrap();
-/// ```
-pub fn get() -> Result<(u16, u16)>
-{
-        get_with_input(&mut io::stdin().lock())
-}
 
 /// Sets cursor position. Writes to `output`. Same as [`set()`].
 pub fn set_with_output(output: &mut dyn Write, x: u16, y: u16) -> Result<usize>

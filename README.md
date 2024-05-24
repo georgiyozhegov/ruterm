@@ -51,9 +51,10 @@ fn main() -> Result<()> {
 
 # Examples
 
-[Loading Example](https://github.com/georgiyozhegov/ruterm/assets/159022025/2041680b-44e0-473d-b52a-6be9c94014e4)
+[Loading Example](https://github.com/georgiyozhegov/ruterm/assets/159022025/28c218f8-80fc-490e-854b-61d9cf8c135f)
 
 # Emulators
+
 
 Some emulators do not support certain features.
 

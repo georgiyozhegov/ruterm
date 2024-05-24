@@ -9,20 +9,6 @@
 ![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/georgiyozhegov/terminal)
 </div>
 
-# Installation
-
-From crates.io:
-```bash
-cargo add ruterm
-```
-
-From repository (more recent):
-```bash
-cargo add --git https://github.com/georgiyozhegov/ruterm.git
-```
-
-**Warning**: Currently, supports only Linux. <br>
-
 # Usage
 
 ```rust
@@ -53,6 +39,20 @@ fn main() -> Result<()> {
 # Examples
 
 ![Loading Example](https://github.com/georgiyozhegov/ruterm/assets/159022025/0575c990-7527-41ca-9068-eb88f4f27825)
+
+# Installation
+
+From crates.io:
+```bash
+cargo add ruterm
+```
+
+From repository (more recent):
+```bash
+cargo add --git https://github.com/georgiyozhegov/ruterm.git
+```
+
+**Warning**: Currently, supports only Linux. <br>
 
 # References
 

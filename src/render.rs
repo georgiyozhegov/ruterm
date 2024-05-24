@@ -56,7 +56,7 @@ where
                                 shift = 0;
                         }
                         _ => {
-                                write_with_output(output, line.as_str())?;
+                                write_with_output(output, &line)?;
                                 shift += visible_length(&line);
                         }
                 }

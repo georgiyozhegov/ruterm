@@ -19,7 +19,7 @@ pub mod color
         /// };
         ///
         /// let content = GREEN.to_string() + "This is a green text" + RESET;
-        /// write(content.as_str()).unwrap();
+        /// write(content).unwrap();
         /// ```
         pub mod fore
         {
@@ -44,7 +44,7 @@ pub mod color
                 /// };
                 ///
                 /// let content = fore_rgb!(255, 0, 0) + "This is a red text" + RESET;
-                /// write(content.as_str()).unwrap();
+                /// write(content).unwrap();
                 /// ```
                 #[macro_export]
                 macro_rules! fore_rgb {
@@ -68,7 +68,7 @@ pub mod color
         /// };
         ///
         /// let content = GREEN.to_string() + "This is a text with green background" + RESET;
-        /// write(content.as_str()).unwrap();
+        /// write(content).unwrap();
         /// ```
         pub mod back
         {
@@ -93,7 +93,7 @@ pub mod color
                 /// };
                 ///
                 /// let content = back_rgb!(255, 0, 0) + "This is a text with red background" + RESET;
-                /// write(content.as_str()).unwrap();
+                /// write(content).unwrap();
                 /// ```
                 #[macro_export]
                 macro_rules! back_rgb {

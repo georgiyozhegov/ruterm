@@ -51,7 +51,7 @@ fn main() -> Result<()> {
 
 # Examples
 
-[Loading Example](https://github.com/georgiyozhegov/ruterm/assets/159022025/28c218f8-80fc-490e-854b-61d9cf8c135f)
+![Loading Example](https://github.com/georgiyozhegov/ruterm/assets/159022025/0575c990-7527-41ca-9068-eb88f4f27825)
 
 # Emulators
 

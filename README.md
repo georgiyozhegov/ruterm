@@ -21,6 +21,7 @@ cargo add --git https://github.com/georgiyozhegov/ruterm.git
 ```
 
 **Warning**: Currently, supports only Linux.
+**Warning**: Doesn't work properly in release mode.
 
 # Usage
 

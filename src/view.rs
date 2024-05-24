@@ -61,7 +61,10 @@ pub mod color
         /// ```no_run
         /// use ruterm::{
         ///         io::write,
-        ///         view::{color::back::GREEN, RESET},
+        ///         view::{
+        ///                 color::back::GREEN,
+        ///                 RESET,
+        ///         },
         /// };
         ///
         /// let content = GREEN.to_string() + "This is a text with green background" + RESET;

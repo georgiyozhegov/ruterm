@@ -99,7 +99,7 @@ where
                                 cursor::move_to(output, Direction::Down, 1)?;
                                 cursor::move_to(output, Direction::Left, shift)?;
                                 shift = 0;
-                        },
+                        }
                         _ => {
                                 write_to(output, line.as_bytes())?;
                                 shift += visible_length(&line);

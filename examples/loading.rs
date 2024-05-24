@@ -44,7 +44,7 @@ fn main() -> Result<()>
                 let coordinates = coordinates(w / 2, h / 2, 1.4, 0.6, radius, n_points);
 
                 cursor::start()?;
-                
+
                 cursor::set(w / 2 - 5, h / 2)?;
                 io::write(b"Loading...")?;
 

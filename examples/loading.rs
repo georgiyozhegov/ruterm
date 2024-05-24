@@ -46,11 +46,11 @@ fn main() -> Result<()>
                 cursor::start()?;
 
                 cursor::set(w / 2 - 5, h / 2)?;
-                io::write(b"Loading...")?;
+                io::write("Loading...")?;
 
                 for (x, y) in coordinates {
                         cursor::set(x, y)?;
-                        io::write(b"O")?;
+                        io::write("O")?;
                         io::flush()?;
 
                         delay_coeff = y as f64 / (h as f64 / 2.0 + radius as f64);
@@ -58,7 +58,7 @@ fn main() -> Result<()>
                 }
 
                 cursor::set(w / 2 - 5, h / 2)?;
-                io::write(b"Completed.")?;
+                io::write("Completed.")?;
 
                 cursor::set(0, h)?;
         });

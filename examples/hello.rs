@@ -12,7 +12,7 @@ fn main() -> Result<()>
                 cursor::start()?; // clear screen
                 let (w, h) = size()?;
                 cursor::set(w / 2, h / 2)?; // sets cursor in the center
-                write(b"Hello from raw mode!\n\r")?;
+                write("Hello from raw mode!\n\r")?;
         });
 
         Ok(())

@@ -17,15 +17,15 @@ use std::io::{
 /// use std::io;
 ///
 /// let mut output = io::stdout();
-/// write_with_output(&mut output, b"Hello").unwrap();
+/// write_with_output(&mut output, "Hello").unwrap();
 /// ```
-pub fn write_with_output(output: &mut dyn Write, content: &[u8]) -> Result<usize>
+pub fn write_with_output<T: ToString>(output: &mut dyn Write, content: T) -> Result<usize>
 {
-        output.write(content).map_err(|_| Error("failed to write"))
+        output.write(content.to_string().as_bytes()).map_err(|_| Error("failed to write"))
 }
 
 /// Writes `content` to stdout. Same as `write_with_output`.
-pub fn write(content: &[u8]) -> Result<usize>
+pub fn write<T: ToString>(content: T) -> Result<usize>
 {
         write_with_output(&mut io::stdout(), content)
 }

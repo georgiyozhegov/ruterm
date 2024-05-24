@@ -41,52 +41,7 @@ fn visible_length(line: &String) -> u16
 /// Moves cursor to the beginning of the next line.
 pub const END: &str = "__render_END__";
 
-/// Writes `text` to `output` in rendered form.
-///
-/// # Usage
-///
-/// ```no_run
-/// use ruterm::render::{
-///         render_with_output,
-///         END, // moves to the newline
-/// };
-/// use std::io;
-///
-/// let mut output = io::stdout();
-/// render_with_output(&mut output, vec!["* *", END, " * ", END, "* *", END]).unwrap();
-/// ```
-///
-/// You can apply style to the text:
-/// ```no_run
-/// use ruterm::{
-///         render::{
-///                 render_with_output,
-///                 END,
-///         },
-///         view::{
-///                 color::fore,
-///                 RESET,
-///         },
-/// };
-/// use std::io;
-///
-/// let mut output = io::stdout();
-/// render_with_output(
-///         &mut output,
-///         vec![
-///                 fore::RED,
-///                 "red",
-///                 END,
-///                 fore::GREEN,
-///                 "green",
-///                 END,
-///                 fore::BLUE,
-///                 "blue",
-///                 RESET, // don't forget to reset style!
-///         ],
-/// )
-/// .unwrap();
-/// ```
+/// Writes `text` to `output` in rendered form. Same as `render`.
 pub fn render_with_output<T>(output: &mut dyn Write, text: Vec<T>) -> Result<()>
 where
         T: ToString,
@@ -109,7 +64,45 @@ where
         Ok(())
 }
 
-/// Writes `text` to stdout in rendered form. Same as `render_with_output`.
+/// Writes `text` to stdout in rendered form.
+///
+/// # Usage
+///
+/// ```no_run
+/// use ruterm::render::{
+///         render,
+///         END, // moves to the newline
+/// };
+///
+/// render(vec!["* *", END, " * ", END, "* *", END]).unwrap();
+/// ```
+///
+/// You can apply style to the text:
+/// ```no_run
+/// use ruterm::{
+///         render::{
+///                 render,
+///                 END,
+///         },
+///         view::{
+///                 color::fore,
+///                 RESET,
+///         },
+/// };
+///
+/// render(vec![
+///         fore::RED,
+///         "red",
+///         END,
+///         fore::GREEN,
+///         "green",
+///         END,
+///         fore::BLUE,
+///         "blue",
+///         RESET, // don't forget to reset style!
+/// ])
+/// .unwrap();
+/// ```
 pub fn render<T>(text: Vec<T>) -> Result<()>
 where
         T: ToString,

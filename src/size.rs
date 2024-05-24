@@ -5,8 +5,11 @@ use crate::error::{
 use libc::{
         c_ushort,
         ioctl,
-        STDOUT_FILENO,
         TIOCGWINSZ,
+};
+use std::{
+        io,
+        os::fd::AsRawFd,
 };
 
 #[repr(C)]
@@ -39,8 +42,8 @@ pub fn size() -> Result<(u16, u16)>
                 ws_xpixel: 0,
                 ws_ypixel: 0,
         };
-        match unsafe { ioctl(STDOUT_FILENO, TIOCGWINSZ, &size) } {
-                0 => Ok((size.ws_col as u16, size.ws_row as u16)),
+        match unsafe { ioctl(io::stdout().as_raw_fd(), TIOCGWINSZ, &size) } {
+                0 => Ok((size.ws_col, size.ws_row)),
                 _ => Err(Error("failed to get terminal size")),
         }
 }

@@ -5,13 +5,12 @@ use ruterm::{
         io,
         render::{
                 render,
-                render_to,
+                render_with_output,
                 END,
         },
         size,
         view::{
                 color::fore,
-                style,
                 RESET,
         },
 };
@@ -44,7 +43,7 @@ macro_rules! fps {
 fn draw(x: u16, y: u16, out: &mut Stdout) -> Result<()>
 {
         cursor::set(x, y)?;
-        render_to(
+        render_with_output(
                 out,
                 vec![
                         fore::YELLOW, "o", RESET, "==", fore::YELLOW, "o",
@@ -59,7 +58,7 @@ fn draw(x: u16, y: u16, out: &mut Stdout) -> Result<()>
                         RESET,
                 ],
         )?;
-        io::flush_to(out)?;
+        io::flush_with_output(out)?;
         Ok(())
 }
 
@@ -136,7 +135,7 @@ fn game(x: &mut u16, y: &mut u16, w: u16, h: u16, key: &mut Option<u8>) -> Resul
         loop {
                 cursor::start()?;
                 draw(*x, *y, &mut stdout)?;
-                *key = io::read_from(&mut stdin);
+                *key = io::read_with_input(&mut stdin);
                 if *key == Some(b'q') {
                         cursor::set(0, h)?;
                         break;
@@ -157,7 +156,7 @@ fn game_parallel(x: Arc<Mutex<u16>>, y: Arc<Mutex<u16>>, w: u16, h: u16) -> Resu
                 let mut key;
                 let mut stdin = io_::stdin();
                 loop {
-                        key = io::read_from(&mut stdin);
+                        key = io::read_with_input(&mut stdin);
                         if key == Some(b'q') {
                                 cursor::set(0, h)?;
                                 *run_status.lock().unwrap() = false;

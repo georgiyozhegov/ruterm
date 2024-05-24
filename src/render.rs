@@ -4,7 +4,7 @@ use crate::{
                 Direction,
         },
         error::Result,
-        io::write_to,
+        io::write_with_output,
 };
 use std::io::{
         self,
@@ -47,20 +47,20 @@ pub const END: &str = "__render_END__";
 ///
 /// ```no_run
 /// use ruterm::render::{
-///         render_to,
+///         render_with_output,
 ///         END, // moves to the newline
 /// };
 /// use std::io;
 ///
 /// let mut output = io::stdout();
-/// render_to(&mut output, vec!["* *", END, " * ", END, "* *", END]).unwrap();
+/// render_with_output(&mut output, vec!["* *", END, " * ", END, "* *", END]).unwrap();
 /// ```
 ///
 /// You can apply style to the text:
 /// ```no_run
 /// use ruterm::{
 ///         render::{
-///                 render_to,
+///                 render_with_output,
 ///                 END,
 ///         },
 ///         view::{
@@ -71,7 +71,7 @@ pub const END: &str = "__render_END__";
 /// use std::io;
 ///
 /// let mut output = io::stdout();
-/// render_to(
+/// render_with_output(
 ///         &mut output,
 ///         vec![
 ///                 fore::RED,
@@ -87,7 +87,7 @@ pub const END: &str = "__render_END__";
 /// )
 /// .unwrap();
 /// ```
-pub fn render_to<T>(output: &mut dyn Write, text: Vec<T>) -> Result<()>
+pub fn render_with_output<T>(output: &mut dyn Write, text: Vec<T>) -> Result<()>
 where
         T: ToString,
 {
@@ -96,12 +96,12 @@ where
                 let line = line.to_string();
                 match line.as_str() {
                         END => {
-                                cursor::move_to(output, Direction::Down, 1)?;
-                                cursor::move_to(output, Direction::Left, shift)?;
+                                cursor::move_with_output(output, Direction::Down, 1)?;
+                                cursor::move_with_output(output, Direction::Left, shift)?;
                                 shift = 0;
                         }
                         _ => {
-                                write_to(output, line.as_bytes())?;
+                                write_with_output(output, line.as_bytes())?;
                                 shift += visible_length(&line);
                         }
                 }
@@ -109,12 +109,12 @@ where
         Ok(())
 }
 
-/// Writes `text` to stdout in rendered form. Same as `render_to`.
+/// Writes `text` to stdout in rendered form. Same as `render_with_output`.
 pub fn render<T>(text: Vec<T>) -> Result<()>
 where
         T: ToString,
 {
-        render_to(&mut io::stdout(), text)
+        render_with_output(&mut io::stdout(), text)
 }
 
 #[cfg(test)]
@@ -134,7 +134,7 @@ mod tests
         {
                 let text = vec!["1line", "1line", END, "2line"];
                 let mut buffer = Vec::new();
-                render_to(&mut buffer, text).unwrap();
+                render_with_output(&mut buffer, text).unwrap();
                 assert_eq!(
                         concat!("1line", "1line", "\x1b[1B", "\x1b[10D", "2line").to_string(),
                         buffer.iter().map(|b| *b as char).collect::<String>()

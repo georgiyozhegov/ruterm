@@ -5,7 +5,7 @@ use crate::{
         },
         io::{
                 write,
-                write_to,
+                write_with_output,
         },
 };
 use std::io::{
@@ -15,7 +15,7 @@ use std::io::{
 };
 
 const MIN_RESPONSE_LENGTH: usize = 6;
-const RESPONSE_NUMBER_OF_PARAMETERS: usize = 2;
+const POSITION_LENGTH: usize = 2;
 
 fn response(input: &mut dyn BufRead) -> Result<String>
 {
@@ -37,7 +37,7 @@ fn position(response: String) -> Result<(u16, u16)>
                 .split(';')
                 .map(|s| s.parse::<u16>().unwrap())
                 .collect::<Vec<_>>();
-        if response.len() != RESPONSE_NUMBER_OF_PARAMETERS {
+        if response.len() != POSITION_LENGTH {
                 Err(Error("invalid number of terminal response parameters"))
         }
         else {
@@ -56,19 +56,18 @@ fn position(response: String) -> Result<(u16, u16)>
 /// use std::io;
 ///
 /// let mut input = io::stdin();
-/// let (x, y) = cursor::get_from(&mut input.lock()).unwrap();
+/// let (x, y) = cursor::get_with_input(&mut input.lock()).unwrap();
 /// ```
-pub fn get_from(input: &mut dyn BufRead) -> Result<(u16, u16)>
+pub fn get_with_input(input: &mut dyn BufRead) -> Result<(u16, u16)>
 {
         let response = response(input)?;
         position(response)
 }
 
-/// Gets cursor position. Reads from stdin. Same as `get_from`.
+/// Gets cursor position. Reads from stdin. Same as `get_with_input`.
 pub fn get() -> Result<(u16, u16)>
 {
-        let response = response(&mut io::stdin().lock())?;
-        position(response)
+        get_with_input(&mut io::stdin().lock())
 }
 
 /// Sets cursor position. Writes to `output`.
@@ -82,17 +81,17 @@ pub fn get() -> Result<(u16, u16)>
 /// use std::io;
 ///
 /// let mut output = io::stdout();
-/// cursor::set_to(&mut output, 2, 5).unwrap();
+/// cursor::set_with_output(&mut output, 2, 5).unwrap();
 /// ```
-pub fn set_to(output: &mut dyn Write, x: u16, y: u16) -> Result<usize>
+pub fn set_with_output(output: &mut dyn Write, x: u16, y: u16) -> Result<usize>
 {
-        write_to(output, format!("\x1b[{};{}H", y, x).as_bytes())
+        write_with_output(output, format!("\x1b[{};{}H", y, x).as_bytes())
 }
 
-// Sets cursor position. Writes to stdout. Same as `set_to`.
+// Sets cursor position. Writes to stdout. Same as `set_with_output`.
 pub fn set(x: u16, y: u16) -> Result<usize>
 {
-        set_to(&mut io::stdout(), x, y)
+        set_with_output(&mut io::stdout(), x, y)
 }
 
 /// Direction of cursor movement.
@@ -130,55 +129,60 @@ impl ToString for Direction
 /// use std::io;
 ///
 /// let mut output = io::stdout();
-/// cursor::move_to(&mut output, Direction::Up, 1).unwrap(); // move up once
-/// cursor::move_to(&mut output, Direction::Right, 2).unwrap(); // move right twice
+/// cursor::move_with_output(&mut output, Direction::Up, 1).unwrap(); // move up once
+/// cursor::move_with_output(&mut output, Direction::Right, 2).unwrap(); // move right twice
 /// ```
-pub fn move_to(output: &mut dyn Write, direction: Direction, distance: u16) -> Result<usize>
+pub fn move_with_output(
+        output: &mut dyn Write,
+        direction: Direction,
+        distance: u16,
+) -> Result<usize>
 {
-        write_to(
+        write_with_output(
                 output,
                 format!("\x1b[{}{}", distance, direction.to_string()).as_bytes(),
         )
 }
 
-/// Moves cursor in the terminal window. Writes to stdout. Same as `move_to`.
+/// Moves cursor in the terminal window. Writes to stdout. Same as `move_with_output`.
 pub fn move_(direction: Direction, distance: u16) -> Result<usize>
 {
-        move_to(&mut io::stdout(), direction, distance)
+        move_with_output(&mut io::stdout(), direction, distance)
 }
 
 /// Moves cursor on the start position and clears the screen. Writes to `output`.
-pub fn start_to(output: &mut dyn Write) -> Result<usize>
+pub fn start_with_output(output: &mut dyn Write) -> Result<usize>
 {
-        write_to(output, b"\x1b[2J")
+        write_with_output(output, b"\x1b[2J")
 }
 
-/// Moves cursor on the start position and clears the screen. Writes to stdout. Same as `start_to`.
+/// Moves cursor on the start position and clears the screen. Writes to stdout. Same as
+/// `start_with_output`.
 pub fn start() -> Result<usize>
 {
-        start_to(&mut io::stdout())
+        start_with_output(&mut io::stdout())
 }
 
 /// Hides cursor. Writes to `output`.
-pub fn hide_to(output: &mut dyn Write) -> Result<usize>
+pub fn hide_with_output(output: &mut dyn Write) -> Result<usize>
 {
-        write_to(output, b"\x1b[?25l")
+        write_with_output(output, b"\x1b[?25l")
 }
 
-/// Hides cursor. Writes to stdout. Same as `hide_to`.
+/// Hides cursor. Writes to stdout. Same as `hide_with_output`.
 pub fn hide() -> Result<usize>
 {
-        hide_to(&mut io::stdout())
+        hide_with_output(&mut io::stdout())
 }
 
 /// Shows cursor. Writes to `output`.
-pub fn show_to(output: &mut dyn Write) -> Result<usize>
+pub fn show_with_output(output: &mut dyn Write) -> Result<usize>
 {
-        write_to(output, b"\x1b[?25h")
+        write_with_output(output, b"\x1b[?25h")
 }
 
-/// Shows cursor. Writes to stdout. Same as `show_to`.
+/// Shows cursor. Writes to stdout. Same as `show_with_output`.
 pub fn show() -> Result<usize>
 {
-        show_to(&mut io::stdout())
+        show_with_output(&mut io::stdout())
 }

@@ -61,7 +61,7 @@ pub fn move_with_output(
 {
         write_with_output(
                 output,
-                format!("\x1b[{}{}", distance, direction.to_string()).as_str(),
+                format!("\x1b[{}{}", distance, direction.to_string()),
         )
 }
 

@@ -126,10 +126,10 @@ impl<D: AsRawFd> Drop for Termios<D>
 /// ```
 #[macro_export]
 macro_rules! in_raw {
-    ($block: block) => {
-            let fd = std::io::stdin();
-            let mut termios = ruterm::raw::Termios::new(fd)?;
-            termios.raw()?;
-            $block
-    }
+        ($block: block) => {
+                let fd = std::io::stdin();
+                let mut termios = ruterm::raw::Termios::new(fd)?;
+                termios.raw()?;
+                $block
+        };
 }

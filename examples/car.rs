@@ -19,14 +19,7 @@ use std::{
                 self as io_,
                 Stdout,
         },
-        sync::{
-                Arc,
-                Mutex,
-        },
-        thread::{
-                self,
-                sleep,
-        },
+        thread::sleep,
         time::Duration,
 };
 
@@ -46,16 +39,16 @@ fn draw(x: u16, y: u16, out: &mut Stdout) -> Result<()>
         render_with_output(
                 out,
                 vec![
-                        fore::YELLOW, "o", RESET, "==", fore::YELLOW, "o",
+                        fore::YELLOW, "o", fore::GREEN, "==", fore::YELLOW, "o",
                         RESET,
                         END,
-                        "|  |",
+                        fore::GREEN, "|  |",
                         END,
-                        "|##|",
-                        END,
-                        "*==*",
-                        END,
+                        "|XX|",
                         RESET,
+                        END,
+                        fore::RED, "*", fore::GREEN, "==", fore::RED, "*", RESET,
+                        END,
                 ],
         )?;
         io::flush_with_output(out)?;

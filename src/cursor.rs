@@ -71,7 +71,7 @@ pub fn get() -> Result<(u16, u16)>
 /// Sets cursor position. Writes to `output`. Same as [`set()`].
 pub fn set_with_output(output: &mut dyn Write, x: u16, y: u16) -> Result<usize>
 {
-        write_with_output(output, format!("\x1b[{};{}H", y, x))
+        write_with_output(output, format!("\x1b[{};{}H", y, x).as_str())
 }
 
 /// Sets cursor position. Writes to stdout.
@@ -122,7 +122,7 @@ pub fn move_with_output(
 {
         write_with_output(
                 output,
-                format!("\x1b[{}{}", distance, direction.to_string()),
+                format!("\x1b[{}{}", distance, direction.to_string()).as_str(),
         )
 }
 

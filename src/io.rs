@@ -9,7 +9,7 @@ use std::io::{
 };
 
 /// Writes `content` to `output`. Same as [`write()`].
-pub fn write_with_output<T: ToString>(output: &mut dyn Write, content: T) -> Result<usize>
+pub fn write_with_output<'s>(output: &mut dyn Write, content: &'s str) -> Result<usize>
 {
         output.write(content.to_string().as_bytes())
                 .map_err(|_| Error("failed to write"))
@@ -24,7 +24,7 @@ pub fn write_with_output<T: ToString>(output: &mut dyn Write, content: T) -> Res
 ///
 /// write("Hello").unwrap();
 /// ```
-pub fn write<T: ToString>(content: T) -> Result<usize>
+pub fn write<'s>(content: &'s str) -> Result<usize>
 {
         write_with_output(&mut io::stdout(), content)
 }

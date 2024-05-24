@@ -38,10 +38,10 @@ fn visible_length(line: &String) -> u16
         length
 }
 
-/// Moves cursor to the beginning of the next line. Used in [`render`] function.
+/// Moves cursor to the beginning of the next line. Used in [`render()`].
 pub const END: &str = "__render_END__";
 
-/// Writes `text` to `output` in rendered form. Same as [`render`].
+/// Writes `text` to `output` in rendered form. Same as [`render()`].
 pub fn render_with_output<T>(output: &mut dyn Write, text: Vec<T>) -> Result<()>
 where
         T: ToString,

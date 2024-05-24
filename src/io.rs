@@ -8,7 +8,7 @@ use std::io::{
         Write,
 };
 
-/// Writes `content` to `output`. Same as [`write`].
+/// Writes `content` to `output`. Same as [`write()`].
 pub fn write_with_output<T: ToString>(output: &mut dyn Write, content: T) -> Result<usize>
 {
         output.write(content.to_string().as_bytes())
@@ -21,17 +21,15 @@ pub fn write_with_output<T: ToString>(output: &mut dyn Write, content: T) -> Res
 ///
 /// ```no_run
 /// use ruterm::io::write;
-/// use std::io;
 ///
 /// write("Hello").unwrap();
 /// ```
-
 pub fn write<T: ToString>(content: T) -> Result<usize>
 {
         write_with_output(&mut io::stdout(), content)
 }
 
-/// Reads one byte from `input`. Same as [`read`].
+/// Reads one byte from `input`. Same as [`read()`].
 pub fn read_with_input(input: &mut impl Read) -> Option<u8>
 {
         let mut buffer: [u8; 1] = [0];
@@ -59,8 +57,7 @@ pub fn read() -> Option<u8>
         read_with_input(&mut io::stdin())
 }
 
-
-/// Flushes `output`. Same as [`flush`].
+/// Flushes `output`. Same as [`flush()`].
 pub fn flush_with_output(output: &mut dyn Write) -> Result<()>
 {
         output.flush().map_err(|_| Error("failed to flush"))

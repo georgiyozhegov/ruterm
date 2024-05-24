@@ -45,7 +45,7 @@ fn position(response: String) -> Result<(u16, u16)>
         }
 }
 
-/// Gets cursor position. Reads from `input`. Same as [`get`] function.
+/// Gets cursor position. Reads from `input`. Same as [`get()`].
 pub fn get_with_input(input: &mut dyn BufRead) -> Result<(u16, u16)>
 {
         let response = response(input)?;
@@ -68,7 +68,7 @@ pub fn get() -> Result<(u16, u16)>
         get_with_input(&mut io::stdin().lock())
 }
 
-/// Sets cursor position. Writes to `output`. Same as [`set`] function.
+/// Sets cursor position. Writes to `output`. Same as [`set()`].
 pub fn set_with_output(output: &mut dyn Write, x: u16, y: u16) -> Result<usize>
 {
         write_with_output(output, format!("\x1b[{};{}H", y, x))
@@ -90,7 +90,7 @@ pub fn set(x: u16, y: u16) -> Result<usize>
         set_with_output(&mut io::stdout(), x, y)
 }
 
-/// Direction of cursor movement. Used in [`move_`] function.
+/// Direction of cursor movement. Used in [`move_()`].
 pub enum Direction
 {
         Left,
@@ -113,7 +113,7 @@ impl ToString for Direction
         }
 }
 
-/// Moves cursor in the terminal window. Writes to `output`. Same as [`move_`].
+/// Moves cursor in the terminal window. Writes to `output`. Same as [`move_()`].
 pub fn move_with_output(
         output: &mut dyn Write,
         direction: Direction,
@@ -144,7 +144,7 @@ pub fn move_(direction: Direction, distance: u16) -> Result<usize>
         move_with_output(&mut io::stdout(), direction, distance)
 }
 
-/// Moves cursor on the start position and clears the screen. Writes to `output`. Same as [`start`].
+/// Moves cursor on the start position and clears the screen. Writes to `output`. Same as [`start()`].
 pub fn start_with_output(output: &mut dyn Write) -> Result<usize>
 {
         write_with_output(output, "\x1b[2J")
@@ -156,25 +156,25 @@ pub fn start() -> Result<usize>
         start_with_output(&mut io::stdout())
 }
 
-/// Hides cursor. Writes to `output`. Same as [`hide`].
+/// Makes cursor invisible. Writes to `output`. Same as [`hide()`].
 pub fn hide_with_output(output: &mut dyn Write) -> Result<usize>
 {
         write_with_output(output, "\x1b[?25l")
 }
 
-/// Hides cursor. Writes to stdout.
+/// Makes cursor invisible. Writes to stdout.
 pub fn hide() -> Result<usize>
 {
         hide_with_output(&mut io::stdout())
 }
 
-/// Shows cursor. Writes to `output`. Same as [`show`].
+/// Makes cursor visible. Writes to `output`. Same as [`show()`].
 pub fn show_with_output(output: &mut dyn Write) -> Result<usize>
 {
         write_with_output(output, "\x1b[?25h")
 }
 
-/// Shows cursor. Writes to stdout.
+/// Makes cursor visible. Writes to stdout.
 pub fn show() -> Result<usize>
 {
         show_with_output(&mut io::stdout())

@@ -23,21 +23,39 @@ use std::{
         time::Duration,
 };
 
-const SPEED: u16 = 1;
+const CAR_SPEED: u16 = 1;
 const FPS: u64 = 60;
 
-macro_rules! fps {
-        ($fps:expr) => {
-                1000 / $fps
-        };
+struct State
+{
+        key: Option<u8>,
+        width: u16,
+        height: u16,
+        car_x: u16,
+        car_y: u16,
+}
+
+impl State
+{
+        pub fn new() -> Result<Self>
+        {
+                let (width, height) = size()?;
+                Ok(Self {
+                        key: None,
+                        width,
+                        height,
+                        car_x: width / 2,
+                        car_y: height / 2,
+                })
+        }
 }
 
 #[rustfmt::skip]
-fn draw(x: u16, y: u16, out: &mut Stdout) -> Result<()>
+fn draw(car_x: u16, car_y: u16, output: &mut Stdout) -> Result<()>
 {
-        cursor::set(x, y)?;
+        cursor::set(car_x, car_y)?;
         render_with_output(
-                out,
+                output,
                 vec![
                         fore::YELLOW, "o", fore::GREEN, "==", fore::YELLOW, "o",
                         RESET,
@@ -51,31 +69,31 @@ fn draw(x: u16, y: u16, out: &mut Stdout) -> Result<()>
                         END,
                 ],
         )?;
-        io::flush_with_output(out)?;
+        io::flush_with_output(output)?;
         Ok(())
 }
 
-fn update(x: &mut u16, y: &mut u16, w: i16, h: i16, key: Option<u8>)
+fn update(state: &mut State)
 {
-        match key {
+        match state.key {
                 Some(b'h') => {
-                        if (*x as i16 - SPEED as i16) > 0 {
-                                *x -= SPEED
+                        if (state.car_x as i16 - CAR_SPEED as i16) > 0 {
+                                state.car_x -= CAR_SPEED
                         }
                 }
                 Some(b'j') => {
-                        if (*y + SPEED) < h as u16 {
-                                *y += SPEED
+                        if (state.car_y + CAR_SPEED) < state.height as u16 {
+                                state.car_y += CAR_SPEED
                         }
                 }
                 Some(b'k') => {
-                        if (*y as i16 - SPEED as i16) > 0 {
-                                *y -= SPEED
+                        if (state.car_y as i16 - CAR_SPEED as i16) > 0 {
+                                state.car_y -= CAR_SPEED
                         }
                 }
                 Some(b'l') => {
-                        if (*x - SPEED) < w as u16 {
-                                *x += SPEED
+                        if (state.car_x - CAR_SPEED) < state.width as u16 {
+                                state.car_x += CAR_SPEED
                         }
                 }
                 _ => {}
@@ -94,9 +112,9 @@ enum Mode
 }
 
 #[rustfmt::skip]
-fn start(w: u16, h: u16) -> Result<Mode>
+fn start(width: u16, height: u16) -> Result<Mode>
 {
-        cursor::set(w / 2 - 11, h / 2)?;
+        cursor::set(width / 2 - 11, height / 2)?;
         render(vec![
                 "Press ",
                 "'h'",
@@ -108,7 +126,6 @@ fn start(w: u16, h: u16) -> Result<Mode>
                 "      'p' to play", END,
         ])?;
         io::flush()?;
-
         loop {
                 match io::read() {
                         Some(b'q') => return Ok(Mode::Exit),
@@ -118,40 +135,38 @@ fn start(w: u16, h: u16) -> Result<Mode>
         }
 }
 
-fn game(x: &mut u16, y: &mut u16, w: u16, h: u16, key: &mut Option<u8>) -> Result<()>
+fn game(state: &mut State) -> Result<()>
 {
         let mut stdout = io_::stdout();
         let mut stdin = io_::stdin();
         loop {
                 cursor::start()?;
-                draw(*x, *y, &mut stdout)?;
-                *key = io::read_with_input(&mut stdin);
-                if *key == Some(b'q') {
-                        cursor::set(0, h)?;
+                draw(state.car_x, state.car_y, &mut stdout)?;
+                state.key = io::read_with_input(&mut stdin);
+                if state.key == Some(b'q') {
+                        cursor::set(0, state.height)?;
                         break;
                 }
-                update(x, y, w as i16, h as i16, *key);
-                delay(fps!(60));
+                update(state);
+                delay(1000 / FPS);
         }
         Ok(())
 }
 
 fn main() -> Result<()>
 {
-        let mut key = None;
-        let (w, h) = size()?;
-        let (mut x, mut y) = (w / 2, h / 2);
+        let mut state = State::new()?;
 
         in_raw!({
                 cursor::hide()?;
                 cursor::start()?;
 
-                match start(w, h)? {
-                        Mode::Play => game(&mut x, &mut y, w, h, &mut key)?,
+                match start(state.width, state.height)? {
+                        Mode::Play => game(&mut state)?,
                         Mode::Exit => {}
                 }
 
-                cursor::set(0, h)?;
+                cursor::set(0, state.height)?;
                 cursor::show()?;
         });
 

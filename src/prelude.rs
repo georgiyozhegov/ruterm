@@ -2,11 +2,11 @@ pub use crate::{
         cursor,
         error::Result,
         in_raw,
+        size,
         tio::{
                 read,
                 write,
         },
-        size,
         view::{
                 color,
                 style,

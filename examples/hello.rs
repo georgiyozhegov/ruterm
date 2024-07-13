@@ -2,8 +2,8 @@ use ruterm::{
         cursor,
         error::Result,
         in_raw,
-        tio::write,
         size,
+        tio::write,
 };
 
 fn main() -> Result<()>

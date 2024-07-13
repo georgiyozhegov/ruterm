@@ -16,14 +16,14 @@ const ESCAPE_END: [char; 9] = ['m', 'A', 'B', 'C', 'D', 'H', 'J', 'l', 'h'];
 
 fn skip_invisible(line: &mut Chars)
 {
-        while let Some(c) = line.next() {
+        for c in line.by_ref() {
                 if ESCAPE_END.contains(&c) {
                         break;
                 }
         }
 }
 
-fn visible_length(line: &String) -> u16
+fn visible_length(line: &str) -> u16
 {
         let mut length = 0;
         let mut line = line.chars();

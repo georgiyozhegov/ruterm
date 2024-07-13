@@ -2,6 +2,10 @@ use crate::{
         error::Result,
         tio::write_with_output,
 };
+use std::fmt::{
+        Display,
+        Formatter,
+};
 use std::io::{
         self,
         Write,
@@ -38,17 +42,20 @@ pub enum Direction
         Right,
 }
 
-impl ToString for Direction
+impl Display for Direction
 {
-        fn to_string(&self) -> String
+        fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result
         {
-                match self {
-                        Self::Left => 'D',
-                        Self::Down => 'B',
-                        Self::Up => 'A',
-                        Self::Right => 'C',
-                }
-                .to_string()
+                write!(
+                        f,
+                        "{}",
+                        match self {
+                                Self::Left => 'D',
+                                Self::Down => 'B',
+                                Self::Up => 'A',
+                                Self::Right => 'C',
+                        }
+                )
         }
 }
 
@@ -61,7 +68,7 @@ pub fn move_with_output(
 {
         write_with_output(
                 output,
-                format!("\x1b[{}{}", distance, direction.to_string()),
+                format!("\x1b[{}{}", distance, direction),
         )
 }
 

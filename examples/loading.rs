@@ -2,8 +2,8 @@ use ruterm::{
         cursor,
         error::Result,
         in_raw,
-        tio,
         size,
+        tio,
 };
 use std::{
         f64::consts::PI,

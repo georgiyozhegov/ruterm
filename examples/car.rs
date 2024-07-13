@@ -2,13 +2,13 @@ use ruterm::{
         cursor,
         error::Result,
         in_raw,
-        tio,
         render::{
                 render,
                 render_with_output,
                 END,
         },
         size,
+        tio,
         view::{
                 color::fore,
                 RESET,

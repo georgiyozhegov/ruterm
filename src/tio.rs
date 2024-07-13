@@ -20,7 +20,7 @@ pub fn write_with_output<T: ToString>(output: &mut dyn Write, content: T) -> Res
 /// # Usage
 ///
 /// ```no_run
-/// use ruterm::io::write;
+/// use ruterm::tio::write;
 ///
 /// write("Hello").unwrap();
 /// ```
@@ -46,7 +46,7 @@ pub fn read_with_input(input: &mut impl Read) -> Option<u8>
 /// # Usage
 ///
 /// ```no_run
-/// use ruterm::io::read;
+/// use ruterm::tio::read;
 ///
 /// if let Some(byte) = read() {
 ///         println!("{byte}");

@@ -13,7 +13,7 @@ pub mod color
         ///
         /// ```no_run
         /// use ruterm::{
-        ///         io::write,
+        ///         tio::write,
         ///         view::color::fore::GREEN,
         ///         view::RESET,
         /// };
@@ -39,7 +39,7 @@ pub mod color
                 /// ```no_run
                 /// use ruterm::{
                 ///         fore_rgb,
-                ///         io::write,
+                ///         tio::write,
                 ///         view::RESET,
                 /// };
                 ///
@@ -60,7 +60,7 @@ pub mod color
         ///
         /// ```no_run
         /// use ruterm::{
-        ///         io::write,
+        ///         tio::write,
         ///         view::{
         ///                 color::back::GREEN,
         ///                 RESET,
@@ -88,7 +88,7 @@ pub mod color
                 /// ```no_run
                 /// use ruterm::{
                 ///         back_rgb,
-                ///         io::write,
+                ///         tio::write,
                 ///         view::RESET,
                 /// };
                 ///

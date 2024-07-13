@@ -2,7 +2,7 @@ use ruterm::{
         cursor,
         error::Result,
         in_raw,
-        io,
+        tio,
         render::{
                 render,
                 render_with_output,
@@ -16,7 +16,7 @@ use ruterm::{
 };
 use std::{
         io::{
-                self as io_,
+                self,
                 Stdout,
         },
         thread::sleep,
@@ -69,7 +69,7 @@ fn draw(car_x: u16, car_y: u16, output: &mut Stdout) -> Result<()>
                         END,
                 ],
         )?;
-        io::flush_with_output(output)?;
+        tio::flush_with_output(output)?;
         Ok(())
 }
 
@@ -125,9 +125,9 @@ fn start(width: u16, height: u16) -> Result<Mode>
                 "      'q' to quit", END,
                 "      'p' to play", END,
         ])?;
-        io::flush()?;
+        tio::flush()?;
         loop {
-                match io::read() {
+                match tio::read() {
                         Some(b'q') => return Ok(Mode::Exit),
                         Some(b'p') => return Ok(Mode::Play),
                         _ => {}
@@ -137,12 +137,12 @@ fn start(width: u16, height: u16) -> Result<Mode>
 
 fn game(state: &mut State) -> Result<()>
 {
-        let mut stdout = io_::stdout();
-        let mut stdin = io_::stdin();
+        let mut stdout = io::stdout();
+        let mut stdin = io::stdin();
         loop {
                 cursor::start()?;
                 draw(state.car_x, state.car_y, &mut stdout)?;
-                state.key = io::read_with_input(&mut stdin);
+                state.key = tio::read_with_input(&mut stdin);
                 if state.key == Some(b'q') {
                         cursor::set(0, state.height)?;
                         break;

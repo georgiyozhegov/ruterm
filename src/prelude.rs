@@ -2,7 +2,7 @@ pub use crate::{
         cursor,
         error::Result,
         in_raw,
-        io::{
+        tio::{
                 read,
                 write,
         },

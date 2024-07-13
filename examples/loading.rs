@@ -2,7 +2,7 @@ use ruterm::{
         cursor,
         error::Result,
         in_raw,
-        io,
+        tio,
         size,
 };
 use std::{
@@ -46,19 +46,19 @@ fn main() -> Result<()>
                 cursor::start()?;
 
                 cursor::set(w / 2 - 5, h / 2)?;
-                io::write("Loading...")?;
+                tio::write("Loading...")?;
 
                 for (x, y) in coordinates {
                         cursor::set(x, y)?;
-                        io::write("O")?;
-                        io::flush()?;
+                        tio::write("O")?;
+                        tio::flush()?;
 
                         delay_coeff = y as f64 / (h as f64 / 2.0 + radius as f64);
                         sleep(Duration::from_millis((delay * delay_coeff) as u64));
                 }
 
                 cursor::set(w / 2 - 5, h / 2)?;
-                io::write("Completed.")?;
+                tio::write("Completed.")?;
 
                 cursor::set(0, h)?;
         });

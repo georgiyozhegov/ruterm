@@ -2,7 +2,7 @@ use ruterm::{
         cursor,
         error::Result,
         in_raw,
-        io::write,
+        tio::write,
         size,
 };
 

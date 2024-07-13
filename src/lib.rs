@@ -1,6 +1,6 @@
 pub mod cursor;
 pub mod error;
-pub mod io;
+pub mod tio;
 pub mod prelude;
 pub mod raw;
 #[cfg(feature = "size")]

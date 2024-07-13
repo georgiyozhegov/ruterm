@@ -4,7 +4,7 @@ use crate::{
                 Direction,
         },
         error::Result,
-        io::write_with_output,
+        tio::write_with_output,
 };
 use std::io::{
         self,

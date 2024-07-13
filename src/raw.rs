@@ -21,7 +21,7 @@ use termios::{
 
 fn termios<D: AsRawFd>(fd: &D) -> Result<Termios_>
 {
-        Termios_::from_fd(fd.as_raw_fd()).map_err(|_| Error("invalid file descriptor"))
+        Termios_::from_fd(fd.as_raw_fd()).map_err(|_| Error("Invalid file descriptor."))
 }
 
 fn raw(mut termios: Termios_) -> Termios_
@@ -95,13 +95,13 @@ impl<D: AsRawFd> Termios<D>
         pub fn raw(&self) -> Result<()>
         {
                 tcsetattr(self.fd.as_raw_fd(), TCSAFLUSH, &self.raw)
-                        .map_err(|_| Error("failed to set raw flags"))
+                        .map_err(|_| Error("Failed to set raw flags."))
         }
 
         pub fn original(&self) -> Result<()>
         {
                 tcsetattr(self.fd.as_raw_fd(), TCSAFLUSH, &self.original)
-                        .map_err(|_| Error("failed to restore original flags"))
+                        .map_err(|_| Error("Failed to restore original flags."))
         }
 }
 

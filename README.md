@@ -22,7 +22,7 @@ use ruterm::{
     error::Result,
     in_raw,
     view::{color::fore, RESET},
-    io::write,
+    tio::write,
     size,
     cursor,
 };
